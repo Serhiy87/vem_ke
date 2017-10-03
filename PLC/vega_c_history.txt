@@ -1,0 +1,54 @@
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// Ver 1: Vega-Classic-2
+// Ver 2: All PLC models
+// Ver 3: Modbus-master (nets of PLC)
+// Ver 4: GPRS-control
+// Ver 5: Modbus extention blocks. All ATmega models
+// Ver 6: Multimodbus
+// Ver 7: ATxmega. All Atmel AVR models
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ver 7.0.1: 2011-02-08 BOOTLOADER_SUPPORT Svyatoslav Kononenko
+
+	Create image of bootloader section to check overlaps errors system.h
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Ver 7.0.2: 2011-04-01 Svyatoslav Kononenko
+
+	Add gsm_rev2.h with hardware GSM modem reset. Compile only for vmd2.
+	Add to sysmodule.h
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ver 7.0.3: 2011-04-21 Svyatoslav Kononenko
+
+	Revised i2c.h with XmegaA1(vmd3) support
+	Clear interrupts during coping exetrnal periphery from/to Modbus map ( DAC_Output_Ext, AI_Output_Ext..) 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ver 7.0.4: 2011-11-01 Svyatoslav Kononenko
+
+	digiproc.h - Add  PowL10
+	menu.h - Add  define new variable type xx_Longint (read only!)
+		Add  define new variable type FFloat and GFloat (read only!)
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+7.0.5 - можно переопределять MB_M_Pause_Min
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ver 7.0.6: 2012-04-02 Svyatoslav Kononenko
+	
+	Add vmd2_1.
+	sysmenu.h, lcd.h, system.h - Add  LCDBackLight Control
+	sysmodule, digitio.h - DI_INVERSION, ADC_Ref_Chan 8
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ver 7.0.7: 2012-08-20 Svyatoslav Kononenko
+	
+	Add Ethernet driver udp_easy.h
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
