@@ -7,7 +7,7 @@ const prog_char name_login[] = "login.html";
 
 	 prog_char Login_Welcome_Str[]	= "Welcome to EMReader! Please log in!              ";
 	 prog_char Login_Busy_Str[]		= "EMReader is busy now. Another user start session.";
-	 prog_char Login_Login_Str[]		= "Login is not valid!                              ";
+	 prog_char Login_Login_Str[]	= "Login is not valid!                              ";
 	prog_char Login_PSW_Str[]		= "Password is not valid!                           ";
 
 	prog_str   Web_LoginMsg_List[] = { Login_Welcome_Str, Login_Busy_Str, Login_Login_Str, Login_PSW_Str};

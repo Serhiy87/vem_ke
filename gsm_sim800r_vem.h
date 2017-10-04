@@ -685,12 +685,10 @@ uint8_t strcpy_EE(char* str_RAM, uint8_t* str_EE){
 void GSM_CloseTransparent(void)
 {	
 	if(Transparent){
-		
 		cli();		
 		Transparent = 0;
 		EMeter_ReInit();
-		sei();
-		
+		sei();		
 	}
 	StartTimer16(TD_TCP_Connect, 65535);	// Перезапуск сервера каждые 655,35 сек
 }

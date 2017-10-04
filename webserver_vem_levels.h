@@ -1216,7 +1216,7 @@ uint8_t Web_Login_Error(void){
 	
 	AccessLevel = 0;
 	for(uint8_t i = 0; i<PASSWORDS_Qt; i++){
-		if(!strcmp(Web_Login_Str, prp(Web_Logins[i]))&& !strcmp_E(Web_Passw_Str, Web_Passws[i])) AccessLevel = i+1;
+		if(!strcmp_PP(Web_Login_Str, prp(Web_Logins[i]))&& !strcmp_E(Web_Passw_Str, Web_Passws[i])) AccessLevel = i+1;
 	}
 
 	if(AccessLevel == 0) {

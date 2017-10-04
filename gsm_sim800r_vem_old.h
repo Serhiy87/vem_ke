@@ -128,6 +128,8 @@
 
 	04.04.2016 - В GSM_CloseTransparent перезапускаем таймер TD_TCP_Connect на 655,35 сек
 
+	12.07.2016 - добавлено пересоединение GPRS после передачи данных три раза
+
 ~~~~~~~~~~~~~*/
 void EM_InitFIFO(void);
 void SendDebug(uint8_t Char);
@@ -136,6 +138,7 @@ void EMeter_ReInit(void);
 void WebClose(void);
 uint8_t IsWebSession(void);
 uint8_t strcmp_E(char* str_RAM, char* str_EE);
+uint8_t sendsWithoutReconnect=0;
 
 #include <avr/io.h>
 #include <avr/pgmspace.h>
@@ -283,6 +286,7 @@ prog_char AT_CIPCLOSE_1[]	= "AT+CIPCLOSE=x,1";
 
 prog_char AT_CIPCLOSE[]		= "AT+CIPCLOSE=1";	//использовать только быстрый метод закрытия TCP/IP содединения
 prog_char AT_CIPSHUT[]		= "AT+CIPSHUT";
+prog_char AT_CGATT_0[]		= "AT+CGATT=0";
 
 prog_char AT_CSQ[]			= "AT+CSQ";
 prog_char AT_ATA[]			= "ATA";
@@ -339,6 +343,7 @@ enum {
 	GSM_CIPCLOSE,
 	GSM_CIPSHUT, GSM_ShutWait,
 
+	GSM_CIPSHUT_, GSM_ShutWait_, GSM_SEND_CGATT0, GSM_WAIT_CGATT0_OK,
 
 	GSM_CMGS, GSM_SMS,
 
@@ -680,12 +685,10 @@ uint8_t strcpy_EE(char* str_RAM, uint8_t* str_EE){
 void GSM_CloseTransparent(void)
 {	
 	if(Transparent){
-		
 		cli();		
 		Transparent = 0;
 		EMeter_ReInit();
-		sei();
-		
+		sei();		
 	}
 	StartTimer16(TD_TCP_Connect, 65535);	// Перезапуск сервера каждые 655,35 сек
 }
@@ -713,7 +716,7 @@ GSM_Init(void)
 		USART_GSM.BAUDCTRLB = 0x00 + USART_BSCALE0_bm;
 		USART_GSM.CTRLA = USART_RXCINTLVL_HI_gc;
 		USART_GSM.CTRLB = (1<<USART_RXEN_bp) | (1<<USART_TXEN_bp) | (0<<USART_CLK2X_bp) | (0 << USART_MPCM_bp) | (0 << USART_TXB8_bp);
-		USART_GSM.CTRLC = USART_CMODE_ASYNCHRONOUS_gc | USART_PMODE_DISABLED_gc | (0<< USART_SBMODE_bp) | USART_CHSIZE_8BIT_gc;
+		USART_GSM.CTRLC = USART_CMODE_ASYNCHRONOUS_gc | USART_PMODE_DISABl_gc | (0<< USART_SBMODE_bp) | USART_CHSIZE_8BIT_gc;
 	#else
 		UCSR_GSM_A = ~(1<<U2X_GSM) &~(1<<MPCM_GSM);
 		UCSR_GSM_B =  (1<<RXCIE_GSM) | (0<<TXCIE_GSM) | (0<<UDRIE_GSM) | (1<<RXEN_GSM) | (0<<UCSZ_GSM_2) | (1<<TXEN_GSM);
@@ -1010,7 +1013,7 @@ inline static void GSM_Auto(){
 			//8938001300106446004F
 			if(GetStringFromFIFO() && ((GSM_RxStr[19] == 'F')||(GSM_RxStr[19] == 'f')) ){
 
-				//PORTF|=1<<PF0;	
+
 
 				GSM_RxStr[18] = ' ';
 				sscanf_P(GSM_RxStr+9,PSTR("%lud"), (long unsigned int*)&ICCID2);
@@ -1411,7 +1414,16 @@ inline static void GSM_Auto(){
 			if(Timer16Stopp(TD_GSM)){
 				//GSM_State = GSM_ServerIdle;
 				GSM_MultiCon = 0;
-				GSM_State = GSM_CIPSHUT;
+				if(sendsWithoutReconnect<3)
+				{
+					GSM_State = GSM_CIPSHUT;
+				}
+				else{
+					sendsWithoutReconnect=0;
+					GSM_State = GSM_CIPSHUT_;
+				}
+				sendsWithoutReconnect++;
+
 			}
 			break;
 		//------------------------
@@ -1425,6 +1437,22 @@ inline static void GSM_Auto(){
 		//------------------------
 
 
+				//------------------------ ПЕРЕЗАГРУЗКА GPRS
+		case GSM_CIPSHUT_:
+			GSM_Execute_Command(AT_CIPSHUT, 1000*GSM_DEBUG_DELAY); GSM_State++;
+			break;
+		case GSM_ShutWait_:
+			if(GSM_Wait_Response_P(RESP_SHUT_OK, GSM_ReStart1)) GSM_State++;
+			break;
+		case GSM_SEND_CGATT0:
+			GSM_Execute_Command(AT_CGATT_0, 1000*GSM_DEBUG_DELAY); GSM_State++;
+			break;
+		case GSM_WAIT_CGATT0_OK:
+			if(GSM_Wait_Response_P(RESP_OK, GSM_ReStart1)){
+				StartTimer16(TD_GSM, 1000);
+			 	GSM_State = GSM_SEND_CIPMUX;
+			}
+			break;
 
 		//------------------------
 		case GSM_SEND_CMGS:
@@ -1755,7 +1783,7 @@ inline static void GSM_Auto(){
 			}
 			break;
 		case GSM_SEND_ATA:
-			GSM_Execute_Command(AT_ATA, 1000*GSM_DEBUG_DELAY); GSM_State++;
+			GSM_Execute_Command(AT_ATA, 6000*GSM_DEBUG_DELAY); GSM_State++;
 			break;
 		case GSM_WAIT_CONNECT_9600:
 			if(GSM_Wait_Response_P(RESP_CONNECT_9600, GSM_SEND_ATH)){

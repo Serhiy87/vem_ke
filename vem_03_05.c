@@ -366,7 +366,7 @@ ApplCycle()
 		else ResDigOut(DO_GSM);
 	}
 
-/*
+
 	//---- Управление светодиодом COMM_LED при приёме/передаче через UART1
 	if(COMM_LED == 1){
 		StartTimer8(TD_COMM_LED,5);
@@ -384,9 +384,6 @@ ApplCycle()
 		if(COMM_LED) ToggleLED(DO_RS);
 		else ResDigOut(DO_RS);
 	}
-	*/
-
-
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
