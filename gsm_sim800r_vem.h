@@ -228,6 +228,7 @@ prog_char URC_NO_CARRIER[] = "NO CARRIER";
 
 // AT-commands RESPONSE
 prog_char RESP_OK[] = "OK";
+prog_char RESP_CONNECT[] = "CONNECT";
 prog_char RESP_CONNECT_OK[] = "x, CONNECT OK";
 prog_char RESP_SERVER_OK[]	= "SERVER OK";
 prog_char RESP_SERVER_CLOSE[] = "SERVER CLOSE";
@@ -238,10 +239,12 @@ prog_char RESP_CLOSE_OK_FAST[] = "x, CLOSE OK";
 prog_char RESP_CSQ[] = "+CSQ:";
 prog_char RESP_SHUT_OK[] = "SHUT OK";
 prog_char RESP_CONNECT_9600[] = "CONNECT 9600";
+prog_char RESP_STATE_CONNECT_OK[] = "STATE: CONNECT OK";
 
 prog_char ESC_SEQ[] = "+++";
 
-
+// KEYWORDS
+prog_char MODEM_EQUAL[]		= "Modem=990";
 // ~~~~~~~~~~~
 // AT-commands
 // ~~~~~~~~~~~
@@ -278,8 +281,11 @@ prog_char AT_CIICR[]		= "AT+CIICR";
 prog_char AT_CIFSR[]		= "AT+CIFSR";
 
 prog_char AT_CIPSTART[]		= "AT+CIPSTART=0,\"UDP\",";
+prog_char AT_CIPSTART_TCP[]	= "AT+CIPSTART=\"TCP\",";
 prog_char AT_CIPSERVER[]	= "AT+CIPSERVER=1,";
 prog_char AT_SERVERCLOSE[]	= "AT+CIPSERVER=0";
+prog_char AT_CIPSTATUS[]    = "AT+CIPSTATUS";
+prog_char AT_ATO[]			= "ATO";
 
 prog_char AT_CIPSEND[]		= "AT+CIPSEND=";
 prog_char AT_CIPCLOSE_1[]	= "AT+CIPCLOSE=x,1";
@@ -292,7 +298,11 @@ prog_char AT_CSQ[]			= "AT+CSQ";
 prog_char AT_ATA[]			= "ATA";
 prog_char AT_ATH[]			= "ATH";
 
-
+//operation
+enum{
+ GSM_INIT_CONNECT,
+ GSM_CHECK_IP_STATE
+};
 // Auto
 enum {
 	GSM_PowerOn,
@@ -315,14 +325,17 @@ enum {
 
 	GSM_WAIT_1,
 
-	GSM_SEND_CGATT,		GSM_WAIT_CGATT_OK,
-	GSM_SEND_CIPCSGP,	GSM_WAIT_CIPCSGP_OK,
-	GSM_SEND_CSTT,		GSM_WAIT_CSTT_OK,
-	GSM_SEND_CIICR,		GSM_WAIT_CIICR_OK,
-	GSM_SEND_CIFSR,		GSM_WAIT_CIFSR_OK,
-
-	GSM_SEND_CIPSTART,		GSM_WAIT_CIPSTART_OK,	GSM_WAIT_CIPSTART_CONNECT_OK,
-	GSM_SEND_CIPSERVER,		GSM_WAIT_CIPSERVER_OK,	GSM_WAIT_CIPSERVER_SERVER_OK,
+	GSM_SEND_CGATT,				GSM_WAIT_CGATT_OK,
+	GSM_SEND_CIPCSGP,			GSM_WAIT_CIPCSGP_OK,
+	GSM_SEND_CSTT,				GSM_WAIT_CSTT_OK,
+	GSM_SEND_CIICR,				GSM_WAIT_CIICR_OK,
+	GSM_SEND_CIFSR,				GSM_WAIT_CIFSR_OK,
+	GSM_SEND_CIPSTART_TCP,		GSM_WAIT_CIPSTART_TCP_OK,		GSM_WAIT_CIPSTART_TCP_CONNECT,
+	GSM_SEND_IDENTIFICATION,	GSM_WAIT_IDENTIFICATION_OK,
+	GSM_SEND_CIPSTATUS,			GSM_WAIT_STATE_CONNECT_OK, 
+	GSM_SEND_ATO,               GSM_WAIT_ATO_CONNECT,
+	GSM_SEND_CIPSTART,			GSM_WAIT_CIPSTART_OK,			GSM_WAIT_CIPSTART_CONNECT_OK,
+	GSM_SEND_CIPSERVER,			GSM_WAIT_CIPSERVER_OK,			GSM_WAIT_CIPSERVER_SERVER_OK,
 
 	GSM_ServerIdle,			GSM_AnalyzeURC,
 
@@ -370,7 +383,20 @@ enum {
 };
 
 volatile uint8_t GSM_State;
+uint8_t TCP_CONNECT_check_timer;
+uint8_t GPRS_RECONNECT_timer;
 uint8_t GSM_StateBeforeReset;
+
+uint16_t Connection_check_period = 3000;
+uint16_t GPRS_RECONNECT_period   = 60000;
+uint8_t Connection_timer;
+uint8_t Transparent_Application_state;
+enum{
+	INIT,
+	WAIT_REQUEST,
+	RECONNECT,
+	CHECK_CONNECTION_STATE
+};
 
 volatile uint8_t GSM_Control;	// –ежим управлени€ модемом
 	#define GSM_CNTL_AUTO	0	// автомат (по умолчанию)
@@ -435,7 +461,12 @@ IP_Addr GSM_ClientIP;
 #define NO_CONNECTION 255
 uint8_t GSM_ActiveConnection = NO_CONNECTION;
 
-
+#ifndef TCP_ServerIP_Init
+	#define TCP_ServerIP_Init {{94,153,208,46},	\
+	{0,0,0,0},	\
+	{0,0,0,0},	\
+	{0,0,0,0}}
+#endif
 #ifndef UDP_ServerIP_Init
 	#define UDP_ServerIP_Init { \
 	 {194,176,97,118},	\
@@ -444,12 +475,17 @@ uint8_t GSM_ActiveConnection = NO_CONNECTION;
 	{0,0,0,0}}
 #endif
 IP_Addr UDP_ServerIP[4] EEMEM= UDP_ServerIP_Init;
+IP_Addr TCP_ServerIP[4] EEMEM= TCP_ServerIP_Init;
 
 #ifndef UDP_ServerPort_Init
 	#define UDP_ServerPort_Init	{2021,0,0,0}
 #endif
-uint16_t UDP_ServerPort[4] EEMEM = UDP_ServerPort_Init;
+#ifndef TCP_ServerPort_Init
+	#define TCP_ServerPort_Init	{555,0,0,0}
+#endif
 
+uint16_t UDP_ServerPort[4] EEMEM = UDP_ServerPort_Init;
+uint16_t TCP_ServerPort[4] EEMEM = TCP_ServerPort_Init;
 #ifndef TCP_ListenPort_Init
 	#define TCP_ListenPort_Init	2020
 #endif
@@ -739,7 +775,8 @@ GSM_Init(void)
 	TD_TCP_Connect = Timer16SysAlloc(1);
 	TD_RSSI = Timer16SysAlloc(1);
 	TD_GSM_Reset = Timer32SysAlloc(1);
-
+	TCP_CONNECT_check_timer = Timer16SysAlloc(1);
+	GPRS_RECONNECT_timer = Timer16SysAlloc(1);
 /*	for (uint8_t i=0; i<4; i++)
 		GPRS_ServerAddr[i] = erb(GPRS_ServerAddr_EE+i);
 */
@@ -941,6 +978,7 @@ inline static void GSM_Auto(){
 	switch(GSM_State){
 
 		case GSM_PowerOn:
+		    Transparent_Application_state = INIT;
 			StartTimer16(TD_GSM,2000*GSM_DEBUG_DELAY);
 			StartTimer32(TD_GSM_Reset, 24UL*60UL*6000);	// ѕерезапуск модема каждые 24ч мин
 			GSM_PWRCNTRL_ON();
@@ -1049,23 +1087,26 @@ inline static void GSM_Auto(){
 			break;
 		//------------------------
 		case GSM_SEND_CIPMUX:
-			if(GSM_MultiCon) GSM_Execute_Command(AT_CIPMUX_1, 100*GSM_DEBUG_DELAY);
-			else GSM_Execute_Command(AT_CIPMUX_0, 100*GSM_DEBUG_DELAY);
+			/*if(GSM_MultiCon) GSM_Execute_Command(AT_CIPMUX_1, 100*GSM_DEBUG_DELAY);
+			else GSM_Execute_Command(AT_CIPMUX_0, 100*GSM_DEBUG_DELAY);*/
+			GSM_Execute_Command(AT_CIPMUX_0, 100*GSM_DEBUG_DELAY);
 			GSM_State++; 
 			break;
 		case GSM_WAIT_CIPMUX_OK:
 			if(GSM_Wait_Response_P(RESP_OK, GSM_ReStart1)){
-				if(GSM_MultiCon){
+				/*if(GSM_MultiCon){
 					GSM_State = GSM_WAIT_1;
 					// between "Call Ready" and "+CMGS"; 8 sec min needs; for kyivstar vpni only
 					StartTimer16(TD_GSM, 1000);
 				}
-				else GSM_State++;
+				else GSM_State++;*/
+				GSM_State++;
 			}
 			break;
 		case GSM_SEND_CIPMODE:
-			if(GSM_MultiCon) GSM_Execute_Command(AT_CIPMODE_0, 100*GSM_DEBUG_DELAY);
-			else GSM_Execute_Command(AT_CIPMODE_1, 100*GSM_DEBUG_DELAY);
+			/*if(GSM_MultiCon) GSM_Execute_Command(AT_CIPMODE_0, 100*GSM_DEBUG_DELAY);
+			else GSM_Execute_Command(AT_CIPMODE_1, 100*GSM_DEBUG_DELAY);*/
+			GSM_Execute_Command(AT_CIPMODE_1, 100*GSM_DEBUG_DELAY);
 			GSM_State++;
 			break;
 		case GSM_WAIT_CIPMODE_OK:
@@ -1144,11 +1185,91 @@ inline static void GSM_Auto(){
 					if(!isdigit(GSM_RxStr[i])) GSM_RxStr[i] = ' ';
 				sscanf_P(GSM_RxStr,PSTR("%hhu %hhu %hhu %hhu"), (unsigned char*)&GSM_MyIP.IP1, (unsigned char*)&GSM_MyIP.IP2, (unsigned char*)&GSM_MyIP.IP3, (unsigned char*)&GSM_MyIP.IP4);
 				if(!IP_compare_Const(&GSM_MyIP,0,0,0,0)){
-					if(GSM_MultiCon) GSM_State++;
-					else GSM_State = GSM_SEND_CIPSERVER;
+				/*	if(GSM_MultiCon) GSM_State++;
+					else GSM_State = GSM_SEND_CIPSERVER;*/
+					GSM_State=GSM_SEND_CIPSTART_TCP;
 				}
 				TempNum=0;	//
 			}			
+			break;
+		//------------------------
+		case GSM_SEND_CIPSTART_TCP:	
+			if(GSM_Flag & (1<<flg_TxCStr)){
+				GSMTxSz = strlen_P(AT_CIPSTART_TCP);
+				sprintf_P(GSM_TxStr, AT_CIPSTART_TCP);
+				
+				sprintf(GSM_TxStr + GSMTxSz, "\"%u.%u.%u.%u\",\"%u\"\r",(unsigned int)erb(&TCP_ServerIP[0].IP1), (unsigned int)erb(&TCP_ServerIP[0].IP2),
+				(unsigned int)erb(&TCP_ServerIP[0].IP3), (unsigned int)erb(&TCP_ServerIP[0].IP4), (unsigned int)erw(&TCP_ServerPort[0]));
+				GSMTxSz = strlen(GSM_TxStr);
+				GSM_SendFirstChar();
+				StartTimer16(TD_GSM, 1000*GSM_DEBUG_DELAY);
+				GSM_State=GSM_WAIT_CIPSTART_TCP_OK;
+			}		
+			break;
+		case GSM_WAIT_CIPSTART_TCP_OK:
+	
+			if(GSM_Wait_Response_P(RESP_OK, GSM_ReStart1)) GSM_State=GSM_WAIT_CIPSTART_TCP_CONNECT;
+			break;
+		case GSM_WAIT_CIPSTART_TCP_CONNECT:
+			
+		/*	if(Timer16Stopp(TD_GSM)) GSM_State = GSM_ReStart1;
+			if(GetStringFromFIFO()){
+			SetDigOut(2);*/
+			/*	char RightAnswer[sizeof(RESP_CONNECT)];
+				strcpy_P(RightAnswer, RESP_CONNECT);*/
+				//RightAnswer[0] = 0x30+TempNum;
+				if(GSM_Wait_Response_P(RESP_CONNECT, GSM_ReStart1)){
+				/*	if(++TempNum>3) GSM_State = GSM_ServerIdle;	//GSM_State++;
+					else GSM_State = GSM_SEND_CIPSTART;*/
+					GSM_State = GSM_SEND_IDENTIFICATION;
+				}
+		//	}
+			break;
+		case GSM_SEND_IDENTIFICATION:
+			if(GSM_Flag & (1<<flg_TxCStr)){
+				GSMTxSz = strlen_P(MODEM_EQUAL);
+				sprintf_P(GSM_TxStr, MODEM_EQUAL);
+				GSM_SendFirstChar();
+				StartTimer16(TD_GSM, 500*GSM_DEBUG_DELAY);
+				GSM_State++;
+			}
+			break;
+		case GSM_WAIT_IDENTIFICATION_OK:
+			if(GSM_Wait_Response_P(RESP_OK, GSM_ReStart1))
+			{
+				EM_InitFIFO(); 
+				InitFIFO();
+				GSM_RX_FIFO_End_Transp = GSM_RX_FIFO_End;
+				GSM_State=GSM_ProtocolMode;
+				StartTimer16(TCP_CONNECT_check_timer, Connection_check_period);
+				StartTimer16(GPRS_RECONNECT_timer, GPRS_RECONNECT_period);
+			}
+			break;
+		case GSM_SEND_CIPSTATUS:
+			GSM_Execute_Command(AT_CIPSTATUS, 500*GSM_DEBUG_DELAY); GSM_State=GSM_WAIT_STATE_CONNECT_OK;			
+			break;
+		case GSM_WAIT_STATE_CONNECT_OK:
+			if(GSM_Wait_Response_P(RESP_STATE_CONNECT_OK, GSM_ReStart1)){
+				GSM_State = GSM_SEND_ATO;
+			}
+			break;
+		case GSM_SEND_ATO:
+			GSM_Execute_Command(AT_ATO, 500*GSM_DEBUG_DELAY); GSM_State=GSM_WAIT_ATO_CONNECT;
+			break;
+		case GSM_WAIT_ATO_CONNECT:
+			if(GSM_Wait_Response_P(RESP_CONNECT, GSM_ReStart1)){
+				switch(Transparent_Application_state){
+					case CHECK_CONNECTION_STATE:
+						StartTimer16(TCP_CONNECT_check_timer, Connection_check_period);
+						break;
+					case RECONNECT:
+						StartTimer16(TCP_CONNECT_check_timer, Connection_check_period);
+						StartTimer16(GPRS_RECONNECT_timer, GPRS_RECONNECT_period);
+						break;
+					default:break;
+				}
+				GSM_State = GSM_ProtocolMode;
+			}
 			break;
 		//------------------------
 		case GSM_SEND_CIPSTART:
@@ -1645,8 +1766,22 @@ inline static void GSM_Auto(){
 		//------------------------
 
 		case GSM_ProtocolMode:	//анализируем первые пин€тых 4 байта
-			
-			if(GSM_CSD == 1){	// ¬ CSD только прозрачный режим
+			Transparent_Application_state = WAIT_REQUEST;
+			Transparent = 1;
+			if(Timer16Stopp(GPRS_RECONNECT_timer)){
+				GSM_State = GSM_Swtch2CommandMode;
+				Transparent_Application_state = RECONNECT;
+				Transparent = 0;
+				break;
+			}
+			if(Timer16Stopp(TCP_CONNECT_check_timer)){
+				GSM_State = GSM_Swtch2CommandMode;
+				Transparent_Application_state = CHECK_CONNECTION_STATE;
+				Transparent = 0;
+				break;
+			}
+
+		/*	if(GSM_CSD == 1){	// ¬ CSD только прозрачный режим
 				AppProtocol=0;	
 				GSM_State = GSM_DataMode;
 				if(UART_Soft){
@@ -1694,7 +1829,7 @@ inline static void GSM_Auto(){
 				GSM_CloseTransparent();
 				break;
 			}
-
+			*/
 			break;
 
 		case GSM_DataMode:
@@ -1738,23 +1873,42 @@ inline static void GSM_Auto(){
 
 		case GSM_Swtch2CommandMode:
 			StartTimer16(TD_GSM,110);	// min 1000ms before +++
-			WebClose();
+			//WebClose();
 			GSM_State++;
 			break;
 		case GSM_Swtch2CommandModePlus:
 			if(Timer16Stopp(TD_GSM)){
+						if(GSM_Flag & (1<<flg_TxCStr)){
+							GSMTxSz = strlen_P(ESC_SEQ);
+							sprintf_P(GSM_TxStr, ESC_SEQ);
+							GSM_SendFirstChar();
+							StartTimer16(TD_GSM, 500*GSM_DEBUG_DELAY);
+							GSM_State++;
+						}
+			/*
 				sprintf_P(GSM_TxStr, ESC_SEQ);
 				GSMTxSz = strlen(GSM_TxStr);
 				GSM_SendFirstChar();
 				StartTimer16(TD_GSM,1000);	// min 500ms after +++
-				GSM_State++;
+				GSM_State++;*/
 			}
 			break;
 		case GSM_WAIT_D2C_SWITCH_OK:
 			if(GSM_Wait_Response_P(RESP_OK, GSM_ReStart1)){
 				StartTimer16(TD_TCP_Connect, 65535);	// ѕерезапуск сервера каждые 655,35 сек
-				if(GSM_CSD==1) GSM_State = GSM_SEND_ATH;
-				else GSM_State = GSM_SEND_CIPCLOSE;
+				/*if(GSM_CSD==1) GSM_State = GSM_SEND_ATH;
+				else GSM_State = GSM_SEND_CIPCLOSE;*/
+				switch(Transparent_Application_state){
+					case CHECK_CONNECTION_STATE:
+						GSM_State = GSM_SEND_CIPSTATUS;
+						InitFIFO();
+						break;
+					case RECONNECT:
+						GSM_State = GSM_CIPSHUT_;
+						break;
+					default:GSM_State = GSM_ReStart1;
+						break;
+				}
 			}
 			break;
 		

@@ -87,7 +87,7 @@ volatile uint8_t EM_BufferReadEnable; //разрешение чтен€ буфера
 
 // ~~~~~~~~~~~
 //FIFO
-#define EM_RX_FIFO_SIZE 250		// при услови€х до 5мс ScanCycle и GPRS_In_MaxSz =< 50
+#define EM_RX_FIFO_SIZE 255		// при услови€х до 5мс ScanCycle и GPRS_In_MaxSz =< 50
 uint8_t EM_RX_FIFO[EM_RX_FIFO_SIZE];
 volatile uint8_t EM_RX_FIFO_Begin;	//»ндекс последнего прин€того байта
 volatile uint8_t EM_RX_FIFO_End;	//»ндекс последнего прочитаного байта
@@ -229,10 +229,11 @@ uint32_t EMeter_M230_Data_Convert(uint16_t Start);
 uint32_t EMeter_ZMR110_Data_Convert(prog_char *Str_P);
 
 // ~~~~~~~~~~~
-void EM_InitFIFO(void){
+void EM_InitFIFO(void){cli();
 	EM_RX_FIFO_Begin = 255;
 	EM_RX_FIFO_End = 255;
 	EMeter_RxCharN = 0;
+	sei();
 //	EM_RX_FIFOOverFlow = 0;
 //	EM_RX_FIFOMax = 0;
 }
@@ -475,6 +476,8 @@ void EMeter_ReInit(void){
 void EMeter_RX(void){
 	//----- Transparent
 	if(Transparent){
+					StartTimer16(TCP_CONNECT_check_timer, Connection_check_period);
+					StartTimer16(GPRS_RECONNECT_timer, GPRS_RECONNECT_period);
 		char Char = UDR_EMETER;
 
 		//---FIFO
@@ -484,6 +487,7 @@ void EMeter_RX(void){
 		if(EM_RX_FIFO_Begin == EM_RX_FIFO_End){
 			EM_RX_FIFOOverFlow = 1;
 			EM_RX_FIFOMax = EM_RX_FIFO_SIZE;
+			
 		}
 
 		// enable DRE interrupt for UDR0
@@ -491,7 +495,7 @@ void EMeter_RX(void){
 		UCSR_GSM_A |= (1<<TXC0);	//Clear TxC pending interrupt
 	}
 	//----- Non transparent
-	else{
+/*	else{
 
 		if(EMeterTypeRAM == LANDIS_GYR_ZMR110){
 			EM_HalfBufferStart[EMeter_RxCharN] = UDR_EMETER;
@@ -534,7 +538,7 @@ void EMeter_RX(void){
 				if(EMeter_RxCharN < (EM_RX_SIZE-1) )EMeter_RxCharN++;// «ащита от переполнени€ дл€ остальных - стоп
 			}
 		}
-	}
+	}*/
 	//-----
 }
 // ~~~~~~~~~

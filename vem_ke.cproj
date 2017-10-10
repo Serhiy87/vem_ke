@@ -5,7 +5,7 @@
     <ProjectVersion>7.0</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
     <ProjectGuid>fa87305a-342e-41a1-be3d-1ab20c567070</ProjectGuid>
-    <Name>vem_03_05</Name>
+    <Name>vem_ke</Name>
     <avrdevice>atmega128</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <AvrProjectType>Importer</AvrProjectType>

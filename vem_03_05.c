@@ -28,7 +28,7 @@
 	3.07 - 15.12.2016 - Данные раз в 30 мин, CSD 60 сек
 
 */
-
+#define VEGA_SN 990
 #define SW_VERSION 3
 #define SW_SUBVERSION 7
 #define SW_VERSION_Str "3.07"
@@ -340,13 +340,13 @@ ApplCycle()
 	}
 
 	//Управление DO_BL
-	if(GSM_DebugMode){
+/*	if(GSM_DebugMode){
 		if(Timer8Stopp(TD_BlinkBL)){
 			StartTimer8(TD_BlinkBL,5);
 			TogDigOut(DO_BL);
 		}
 	}
-	else ResDigOut(DO_BL);
+	else ResDigOut(DO_BL);*/
 
 	//---- Управление светодиодом GSM_LED при приёме/передаче через UART0
 	if(GSM_LED == 1){
@@ -357,7 +357,7 @@ ApplCycle()
 		if(Timer8Stopp(TD_GSM_LED)) GSM_LED = 0;
 	}
 	// Управление светодиодом DO_GSM
-	if(GSM_State == GSM_ServerIdle){
+	if(GSM_State == GSM_ProtocolMode){
 		if(GSM_LED) ToggleLED(DO_GSM);
 		else SetDigOut(DO_GSM);
 	}
