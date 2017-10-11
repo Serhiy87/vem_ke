@@ -95,7 +95,7 @@ volatile uint8_t EM_RX_FIFOOverFlow;
 volatile uint8_t EM_RX_FIFOMax;
 
 uint8_t TD_EMeter;
-
+uint8_t EMeterIsLink; //устанавливается в 1 если счетчик ответил
 uint8_t EM_Mode;
 uint8_t EM_Retry=10;
 
@@ -478,6 +478,7 @@ void EMeter_RX(void){
 	if(Transparent){
 					StartTimer16(TCP_CONNECT_check_timer, Connection_check_period);
 					StartTimer16(GPRS_RECONNECT_timer, GPRS_RECONNECT_period);
+					EMeterIsLink=1;
 		char Char = UDR_EMETER;
 
 		//---FIFO
@@ -547,6 +548,7 @@ void EMeter_DRE(void){
 	else{
 		if(Transparent){
 			GetByteFromGSM_FIFO_Transp();
+			EMeterIsLink=0;
 		}
 		else{
 			if(EMeter_TxCharN < EMeter_TxSz){

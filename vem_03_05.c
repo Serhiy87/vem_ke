@@ -376,7 +376,8 @@ ApplCycle()
 		if(Timer8Stopp(TD_COMM_LED)) COMM_LED = 0;
 	}
 	// Управление светодиодом COMM_LED 
-	if(EMeter_Link()){
+	//if(EMeter_Link()){
+	if(EMeterIsLink){
 		if(COMM_LED) ToggleLED(DO_RS);
 		else SetDigOut(DO_RS);
 	}
