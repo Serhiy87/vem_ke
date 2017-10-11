@@ -17,6 +17,14 @@ GSMApply(void){//===================================================== Применени
 	wdt_reset();
 	eww(&TCP_ListenPort, MBHoldReg1[36]);
 	eww(&TCP_CONNECT_timeout, MBHoldReg1[37]);
+
+	ewb(&TCP_ServerIP->IP1, MBHoldReg1[38]);
+	ewb(&TCP_ServerIP->IP2, MBHoldReg1[39]);
+	ewb(&TCP_ServerIP->IP3, MBHoldReg1[40]);
+	ewb(&TCP_ServerIP->IP4, MBHoldReg1[41]);
+	eww(&TCP_ServerPort[0], MBHoldReg1[42]);
+	eww(&SerialNum, MBHoldReg1[43]);
+	
 }
 
 void Modbus_ReadHoldReg(void){
@@ -27,6 +35,12 @@ void Modbus_ReadHoldReg(void){
 	erbl(&MBHoldReg1[26], &GPRS_apn_psw, sizeof(GPRS_apn_psw));
 	MBHoldReg1[36] = erw(&TCP_ListenPort);
 	MBHoldReg1[37] = erw(&TCP_CONNECT_timeout);
+	MBHoldReg1[38] = erb(&TCP_ServerIP->IP1);
+	MBHoldReg1[39] = erb(&TCP_ServerIP->IP2);
+	MBHoldReg1[40] = erb(&TCP_ServerIP->IP3);
+	MBHoldReg1[41] = erb(&TCP_ServerIP->IP4);
+	MBHoldReg1[42] = erw(&TCP_ServerPort[0]);
+	MBHoldReg1[43] = erw(&SerialNum);
 	IntOn();
 }
 
@@ -36,16 +50,16 @@ void Modbus_App(void){
 	IntOff();
 	MBInput1[0] = DigInput.State[0];
 
-	MBInReg1[0] = (SW_VERSION << 8) + 	SW_SUBVERSION;
-	MBInReg1[1] = MemFail;
-	MBInReg1[2] = (uint16_t)(LiveTime & 0x0000FFFF);
-	MBInReg1[3] = (uint16_t)(LiveTime>>16);
-	MBInReg1[4] = (uint16_t)Temperature[0];	
-	MBInReg1[5] = (uint16_t)GSM_State;
-	MBInReg1[6] = GSM_MyIP.IP1;
-	MBInReg1[7] = GSM_MyIP.IP2;
-	MBInReg1[8] = GSM_MyIP.IP3;
-	MBInReg1[9] = GSM_MyIP.IP4;
+	MBInReg1[0]  = (SW_VERSION << 8) + 	SW_SUBVERSION;
+	MBInReg1[1]  = MemFail;
+	MBInReg1[2]  = (uint16_t)(LiveTime & 0x0000FFFF);
+	MBInReg1[3]  = (uint16_t)(LiveTime>>16);
+	MBInReg1[4]  = (uint16_t)Temperature[0];	
+	MBInReg1[5]  = (uint16_t)GSM_State;
+	MBInReg1[6]  = GSM_MyIP.IP1;
+	MBInReg1[7]  = GSM_MyIP.IP2;
+	MBInReg1[8]  = GSM_MyIP.IP3;
+	MBInReg1[9]  = GSM_MyIP.IP4;
 	MBInReg1[10] = GSM_ClientIP.IP1;
 	MBInReg1[11] = GSM_ClientIP.IP2;
 	MBInReg1[12] = GSM_ClientIP.IP3;

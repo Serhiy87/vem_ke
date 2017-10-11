@@ -210,7 +210,7 @@ WebStrLen           0x1               vem_03_05.o
 GSM_Modem           0x1               vem_03_05.o
 EM_ID_Str           0x9               vem_03_05.o
 GSM_RX_FIFO_Begin   0x1               vem_03_05.o
-MBHoldReg1          0x4c              vem_03_05.o
+MBHoldReg1          0x58              vem_03_05.o
 MB_M_Try            0x1               vem_03_05.o
 GPRS_LoginLevel     0x1               vem_03_05.o
 DigInput            0x3               vem_03_05.o
@@ -485,6 +485,8 @@ Discarded input sections
                 0x00000000       0xf4 vem_03_05.o
  .text.EM_GetDataFromFIFO
                 0x00000000       0x50 vem_03_05.o
+ .text.GSM_Transparent2Modbus
+                0x00000000        0xc vem_03_05.o
  .text.EMeter_SendFirstChar
                 0x00000000       0x38 vem_03_05.o
  .text.EMeter_SendCR
@@ -535,17 +537,17 @@ Discarded input sections
                 0x00000000        0x2 vem_03_05.o
  .text.Modbus_App_Init
                 0x00000000        0x4 vem_03_05.o
- .bss.RING_Retry.5016
+ .bss.RING_Retry.5017
                 0x00000000        0x1 vem_03_05.o
- .progmem.data.__c.5005
+ .progmem.data.__c.5006
                 0x00000000        0x4 vem_03_05.o
- .progmem.data.__c.4997
+ .progmem.data.__c.4998
                 0x00000000        0x5 vem_03_05.o
- .progmem.data.__c.4988
+ .progmem.data.__c.4989
                 0x00000000        0xf vem_03_05.o
- .progmem.data.__c.4980
+ .progmem.data.__c.4981
                 0x00000000        0xf vem_03_05.o
- .progmem.data.__c.4916
+ .progmem.data.__c.4917
                 0x00000000        0x3 vem_03_05.o
  .bss.EM_ReReadRQ
                 0x00000000        0x1 vem_03_05.o
@@ -656,6 +658,8 @@ Discarded input sections
                 0x00000000        0xd vem_03_05.o
  .progmem.data.AT_IFC
                 0x00000000        0xb vem_03_05.o
+ .progmem.data.MODEM_EQUAL
+                0x00000000        0x7 vem_03_05.o
  .progmem.data.RESP_Invitation
                 0x00000000        0x2 vem_03_05.o
  .progmem.data.URC_CPIN_READY
@@ -1178,7 +1182,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0xeb5e
+.text           0x00000000     0xec22
  *(.vectors)
  .vectors       0x00000000       0x8c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
                 0x00000000                __vector_default
@@ -1214,35 +1218,35 @@ END GROUP
  *(.trampolines*)
                 0x000002ca                __trampolines_end = .
  *(.progmem*)
- .progmem.data.__c.5165
+ .progmem.data.__c.5166
                 0x000002ca       0x10 vem_03_05.o
- .progmem.data.__c.5163
+ .progmem.data.__c.5164
                 0x000002da       0x10 vem_03_05.o
- .progmem.data.__c.5161
+ .progmem.data.__c.5162
                 0x000002ea        0xb vem_03_05.o
- .progmem.data.__c.4708
+ .progmem.data.__c.4709
                 0x000002f5        0xa vem_03_05.o
- .progmem.data.__c.4706
+ .progmem.data.__c.4707
                 0x000002ff        0x6 vem_03_05.o
- .progmem.data.__c.4689
+ .progmem.data.__c.4690
                 0x00000305        0x5 vem_03_05.o
- .progmem.data.__c.4590
+ .progmem.data.__c.4591
                 0x0000030a        0xc vem_03_05.o
- .progmem.data.__c.4588
+ .progmem.data.__c.4589
                 0x00000316        0x2 vem_03_05.o
- .progmem.data.__c.3744
+ .progmem.data.__c.3745
                 0x00000318       0x10 vem_03_05.o
- .progmem.data.__c.3732
+ .progmem.data.__c.3733
                 0x00000328       0x13 vem_03_05.o
- .progmem.data.__c.3721
+ .progmem.data.__c.3722
                 0x0000033b       0x1e vem_03_05.o
- .progmem.data.__c.3696
+ .progmem.data.__c.3697
                 0x00000359        0xd vem_03_05.o
- .progmem.data.__c.3672
+ .progmem.data.__c.3673
                 0x00000366       0x14 vem_03_05.o
- .progmem.data.__c.3646
+ .progmem.data.__c.3647
                 0x0000037a        0x3 vem_03_05.o
- .progmem.data.__c.3644
+ .progmem.data.__c.3645
                 0x0000037d        0x5 vem_03_05.o
  .progmem.data.aCRCLo.1930
                 0x00000382      0x100 vem_03_05.o
@@ -2059,127 +2063,124 @@ END GROUP
  .progmem.data.AT_AT
                 0x00004e89        0x3 vem_03_05.o
                 0x00004e89                AT_AT
- .progmem.data.MODEM_EQUAL
-                0x00004e8c        0xa vem_03_05.o
-                0x00004e8c                MODEM_EQUAL
  .progmem.data.ESC_SEQ
-                0x00004e96        0x4 vem_03_05.o
-                0x00004e96                ESC_SEQ
+                0x00004e8c        0x4 vem_03_05.o
+                0x00004e8c                ESC_SEQ
  .progmem.data.RESP_STATE_CONNECT_OK
-                0x00004e9a       0x12 vem_03_05.o
-                0x00004e9a                RESP_STATE_CONNECT_OK
+                0x00004e90       0x12 vem_03_05.o
+                0x00004e90                RESP_STATE_CONNECT_OK
  .progmem.data.RESP_CONNECT_9600
-                0x00004eac        0xd vem_03_05.o
-                0x00004eac                RESP_CONNECT_9600
+                0x00004ea2        0xd vem_03_05.o
+                0x00004ea2                RESP_CONNECT_9600
  .progmem.data.RESP_SHUT_OK
-                0x00004eb9        0x8 vem_03_05.o
-                0x00004eb9                RESP_SHUT_OK
+                0x00004eaf        0x8 vem_03_05.o
+                0x00004eaf                RESP_SHUT_OK
  .progmem.data.RESP_CSQ
-                0x00004ec1        0x6 vem_03_05.o
-                0x00004ec1                RESP_CSQ
+                0x00004eb7        0x6 vem_03_05.o
+                0x00004eb7                RESP_CSQ
  .progmem.data.RESP_CLOSE_OK_FAST
-                0x00004ec7        0xc vem_03_05.o
-                0x00004ec7                RESP_CLOSE_OK_FAST
+                0x00004ebd        0xc vem_03_05.o
+                0x00004ebd                RESP_CLOSE_OK_FAST
  .progmem.data.RESP_CLOSE_OK
-                0x00004ed3        0x9 vem_03_05.o
-                0x00004ed3                RESP_CLOSE_OK
+                0x00004ec9        0x9 vem_03_05.o
+                0x00004ec9                RESP_CLOSE_OK
  .progmem.data.RESP_SEND_OK
-                0x00004edc        0xb vem_03_05.o
-                0x00004edc                RESP_SEND_OK
+                0x00004ed2        0xb vem_03_05.o
+                0x00004ed2                RESP_SEND_OK
  .progmem.data.RESP_SERVER_CLOSE
-                0x00004ee7        0xd vem_03_05.o
-                0x00004ee7                RESP_SERVER_CLOSE
+                0x00004edd        0xd vem_03_05.o
+                0x00004edd                RESP_SERVER_CLOSE
  .progmem.data.RESP_SERVER_OK
-                0x00004ef4        0xa vem_03_05.o
-                0x00004ef4                RESP_SERVER_OK
+                0x00004eea        0xa vem_03_05.o
+                0x00004eea                RESP_SERVER_OK
  .progmem.data.RESP_CONNECT_OK
-                0x00004efe        0xe vem_03_05.o
-                0x00004efe                RESP_CONNECT_OK
+                0x00004ef4        0xe vem_03_05.o
+                0x00004ef4                RESP_CONNECT_OK
  .progmem.data.RESP_CONNECT
-                0x00004f0c        0x8 vem_03_05.o
-                0x00004f0c                RESP_CONNECT
+                0x00004f02        0x8 vem_03_05.o
+                0x00004f02                RESP_CONNECT
  .progmem.data.RESP_OK
-                0x00004f14        0x3 vem_03_05.o
-                0x00004f14                RESP_OK
+                0x00004f0a        0x3 vem_03_05.o
+                0x00004f0a                RESP_OK
  .progmem.data.URC_NO_CARRIER
-                0x00004f17        0xb vem_03_05.o
-                0x00004f17                URC_NO_CARRIER
+                0x00004f0d        0xb vem_03_05.o
+                0x00004f0d                URC_NO_CARRIER
  .progmem.data.URC_RING
-                0x00004f22        0x5 vem_03_05.o
-                0x00004f22                URC_RING
+                0x00004f18        0x5 vem_03_05.o
+                0x00004f18                URC_RING
  .progmem.data.URC_PDPDEACT
-                0x00004f27        0xb vem_03_05.o
-                0x00004f27                URC_PDPDEACT
+                0x00004f1d        0xb vem_03_05.o
+                0x00004f1d                URC_PDPDEACT
  .progmem.data.URC_CLOSED
-                0x00004f32        0x9 vem_03_05.o
-                0x00004f32                URC_CLOSED
+                0x00004f28        0x9 vem_03_05.o
+                0x00004f28                URC_CLOSED
  .progmem.data.URC_RECEIVE
-                0x00004f3b        0xa vem_03_05.o
-                0x00004f3b                URC_RECEIVE
+                0x00004f31        0xa vem_03_05.o
+                0x00004f31                URC_RECEIVE
  .progmem.data.URC_CONNECT
-                0x00004f45        0x8 vem_03_05.o
-                0x00004f45                URC_CONNECT
+                0x00004f3b        0x8 vem_03_05.o
+                0x00004f3b                URC_CONNECT
  .progmem.data.URC_REMOTE_IP
-                0x00004f4d        0xa vem_03_05.o
-                0x00004f4d                URC_REMOTE_IP
+                0x00004f43        0xa vem_03_05.o
+                0x00004f43                URC_REMOTE_IP
  .progmem.data.URC_SMS_READY
-                0x00004f57        0xa vem_03_05.o
-                0x00004f57                URC_SMS_READY
+                0x00004f4d        0xa vem_03_05.o
+                0x00004f4d                URC_SMS_READY
  .progmem.data.URC_CALL_READY
-                0x00004f61        0xb vem_03_05.o
-                0x00004f61                URC_CALL_READY
+                0x00004f57        0xb vem_03_05.o
+                0x00004f57                URC_CALL_READY
  .progmem.data.URC_RDY
-                0x00004f6c        0x4 vem_03_05.o
-                0x00004f6c                URC_RDY
+                0x00004f62        0x4 vem_03_05.o
+                0x00004f62                URC_RDY
  .progmem.data.GSM_SIMCOM_SIM800
-                0x00004f70        0xe vem_03_05.o
-                0x00004f70                GSM_SIMCOM_SIM800
+                0x00004f66        0xe vem_03_05.o
+                0x00004f66                GSM_SIMCOM_SIM800
  .progmem.data.GSM_SIMCOM_SIM900R
-                0x00004f7e        0xf vem_03_05.o
-                0x00004f7e                GSM_SIMCOM_SIM900R
+                0x00004f74        0xf vem_03_05.o
+                0x00004f74                GSM_SIMCOM_SIM900R
  .progmem.data.MB_Timer
-                0x00004f8d        0xc vem_03_05.o
+                0x00004f83        0xc vem_03_05.o
  .progmem.data.MB_Port
-                0x00004f99       0x14 vem_03_05.o
+                0x00004f8f       0x14 vem_03_05.o
  .progmem.data.BR_Tbl
-                0x00004fad       0x1b vem_03_05.o
-                0x00004fad                BR_Tbl
+                0x00004fa3       0x1b vem_03_05.o
+                0x00004fa3                BR_Tbl
  .progmem.data.Modbus_Map
-                0x00004fc8       0x10 vem_03_05.o
-                0x00004fc8                Modbus_Map
+                0x00004fbe       0x10 vem_03_05.o
+                0x00004fbe                Modbus_Map
  .progmem.data.MB_Role
-                0x00004fd8        0x1 vem_03_05.o
- .progmem.data  0x00004fd9        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(vfscanf_std.o)
-                0x00004fe6                . = ALIGN (0x2)
- *fill*         0x00004fe5        0x1 
+                0x00004fce        0x1 vem_03_05.o
+ .progmem.data  0x00004fcf        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(vfscanf_std.o)
+                0x00004fdc                . = ALIGN (0x2)
+ *fill*         0x00004fdb        0x1 
  *(.jumptables)
  *(.jumptables*)
  *(.lowtext)
  *(.lowtext*)
-                0x00004fe6                __ctors_start = .
+                0x00004fdc                __ctors_start = .
  *(.ctors)
-                0x00004fe6                __ctors_end = .
-                0x00004fe6                __dtors_start = .
+                0x00004fdc                __ctors_end = .
+                0x00004fdc                __dtors_start = .
  *(.dtors)
-                0x00004fe6                __dtors_end = .
+                0x00004fdc                __dtors_end = .
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x00004fe6        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
-                0x00004fe6                __init
+ .init0         0x00004fdc        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+                0x00004fdc                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x00004fe6        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+ .init2         0x00004fdc        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
  *(.init2)
  *(.init3)
  *(.init3)
  *(.init4)
- .init4         0x00004ff2       0x1a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_copy_data.o)
-                0x00004ff2                __do_copy_data
- .init4         0x0000500c       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_clear_bss.o)
-                0x0000500c                __do_clear_bss
+ .init4         0x00004fe8       0x1a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_copy_data.o)
+                0x00004fe8                __do_copy_data
+ .init4         0x00005002       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_clear_bss.o)
+                0x00005002                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
@@ -2190,822 +2191,819 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x0000501c        0x8 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+ .init9         0x00005012        0x8 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
  *(.init9)
  *(.text)
- .text          0x00005024        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
-                0x00005024                __vector_22
-                0x00005024                __vector_28
-                0x00005024                __vector_1
-                0x00005024                __vector_34
-                0x00005024                __vector_24
-                0x00005024                __bad_interrupt
-                0x00005024                __vector_6
-                0x00005024                __vector_3
-                0x00005024                __vector_23
-                0x00005024                __vector_25
-                0x00005024                __vector_11
-                0x00005024                __vector_13
-                0x00005024                __vector_17
-                0x00005024                __vector_7
-                0x00005024                __vector_27
-                0x00005024                __vector_5
-                0x00005024                __vector_33
-                0x00005024                __vector_4
-                0x00005024                __vector_2
-                0x00005024                __vector_21
-                0x00005024                __vector_29
-                0x00005024                __vector_8
-                0x00005024                __vector_26
-                0x00005024                __vector_14
-                0x00005024                __vector_10
-                0x00005024                __vector_16
-                0x00005028                . = ALIGN (0x2)
+ .text          0x0000501a        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51/crtm128.o
+                0x0000501a                __vector_22
+                0x0000501a                __vector_28
+                0x0000501a                __vector_1
+                0x0000501a                __vector_34
+                0x0000501a                __vector_24
+                0x0000501a                __bad_interrupt
+                0x0000501a                __vector_6
+                0x0000501a                __vector_3
+                0x0000501a                __vector_23
+                0x0000501a                __vector_25
+                0x0000501a                __vector_11
+                0x0000501a                __vector_13
+                0x0000501a                __vector_17
+                0x0000501a                __vector_7
+                0x0000501a                __vector_27
+                0x0000501a                __vector_5
+                0x0000501a                __vector_33
+                0x0000501a                __vector_4
+                0x0000501a                __vector_2
+                0x0000501a                __vector_21
+                0x0000501a                __vector_29
+                0x0000501a                __vector_8
+                0x0000501a                __vector_26
+                0x0000501a                __vector_14
+                0x0000501a                __vector_10
+                0x0000501a                __vector_16
+                0x0000501e                . = ALIGN (0x2)
  *(.text.*)
- .text.rrb      0x00005028        0x6 vem_03_05.o
-                0x00005028                rrb
- .text.prb      0x0000502e        0x6 vem_03_05.o
-                0x0000502e                prb
- .text.prb_f    0x00005034        0xe vem_03_05.o
-                0x00005034                prb_f
- .text.RS485_1  0x00005042        0xa vem_03_05.o
-                0x00005042                RS485_1
- .text.MB_LED1  0x0000504c        0x2 vem_03_05.o
-                0x0000504c                MB_LED1
+ .text.rrb      0x0000501e        0x6 vem_03_05.o
+                0x0000501e                rrb
+ .text.prb      0x00005024        0x6 vem_03_05.o
+                0x00005024                prb
+ .text.prb_f    0x0000502a        0xe vem_03_05.o
+                0x0000502a                prb_f
+ .text.RS485_1  0x00005038        0xa vem_03_05.o
+                0x00005038                RS485_1
+ .text.MB_LED1  0x00005042        0x2 vem_03_05.o
+                0x00005042                MB_LED1
  .text.MB_LED_Err_On_1
-                0x0000504e        0x2 vem_03_05.o
-                0x0000504e                MB_LED_Err_On_1
+                0x00005044        0x2 vem_03_05.o
+                0x00005044                MB_LED_Err_On_1
  .text.MB_LED_Err_Off_1
-                0x00005050        0x2 vem_03_05.o
-                0x00005050                MB_LED_Err_Off_1
+                0x00005046        0x2 vem_03_05.o
+                0x00005046                MB_LED_Err_Off_1
  .text.StartTimer0
-                0x00005052        0xc vem_03_05.o
-                0x00005052                StartTimer0
+                0x00005048        0xc vem_03_05.o
+                0x00005048                StartTimer0
  .text.StartTimer2
-                0x0000505e        0xc vem_03_05.o
-                0x0000505e                StartTimer2
+                0x00005054        0xc vem_03_05.o
+                0x00005054                StartTimer2
  .text.MB_Timer_ISR
-                0x0000506a       0x8e vem_03_05.o
+                0x00005060       0x8e vem_03_05.o
  .text.MBRecept
-                0x000050f8       0x84 vem_03_05.o
+                0x000050ee       0x84 vem_03_05.o
  .text.GetSlave
-                0x0000517c       0x2a vem_03_05.o
+                0x00005172       0x2a vem_03_05.o
  .text.DI_Init_Hard
-                0x000051a6       0x42 vem_03_05.o
- .text.Reboot   0x000051e8        0x4 vem_03_05.o
-                0x000051e8                Reboot
+                0x0000519c       0x42 vem_03_05.o
+ .text.Reboot   0x000051de        0x4 vem_03_05.o
+                0x000051de                Reboot
  .text.ResetGSMState
-                0x000051ec        0x8 vem_03_05.o
-                0x000051ec                ResetGSMState
+                0x000051e2        0x8 vem_03_05.o
+                0x000051e2                ResetGSMState
  .text.Start_Updater
-                0x000051f4        0x8 vem_03_05.o
-                0x000051f4                Start_Updater
+                0x000051ea        0x8 vem_03_05.o
+                0x000051ea                Start_Updater
  .text.Web_Login_Request
-                0x000051fc        0x8 vem_03_05.o
-                0x000051fc                Web_Login_Request
- .text.erb      0x00005204        0x4 vem_03_05.o
-                0x00005204                erb
- .text.GetReg   0x00005208       0x76 vem_03_05.o
- .text.prd      0x0000527e        0xc vem_03_05.o
-                0x0000527e                prd
+                0x000051f2        0x8 vem_03_05.o
+                0x000051f2                Web_Login_Request
+ .text.erb      0x000051fa        0x4 vem_03_05.o
+                0x000051fa                erb
+ .text.GetReg   0x000051fe       0x76 vem_03_05.o
+ .text.prd      0x00005274        0xc vem_03_05.o
+                0x00005274                prd
  .text.CRC_Seed
-                0x0000528a       0x9a vem_03_05.o
-                0x0000528a                CRC_Seed
- .text.CRC      0x00005324       0x12 vem_03_05.o
-                0x00005324                CRC
+                0x00005280       0x9a vem_03_05.o
+                0x00005280                CRC_Seed
+ .text.CRC      0x0000531a       0x12 vem_03_05.o
+                0x0000531a                CRC
  .text.CRC_EEPROM_calc
-                0x00005336       0x38 vem_03_05.o
+                0x0000532c       0x38 vem_03_05.o
  .text.CRC_EEPROM_upd
-                0x0000536e       0x18 vem_03_05.o
- .text.ewb      0x00005386        0x8 vem_03_05.o
-                0x00005386                ewb
+                0x00005364       0x18 vem_03_05.o
+ .text.ewb      0x0000537c        0x8 vem_03_05.o
+                0x0000537c                ewb
  .text.Start_Bootloader
-                0x0000538e        0xe vem_03_05.o
-                0x0000538e                Start_Bootloader
- .text.eww      0x0000539c        0x8 vem_03_05.o
-                0x0000539c                eww
- .text.ewd      0x000053a4        0x8 vem_03_05.o
-                0x000053a4                ewd
- .text.ewbl     0x000053ac        0x8 vem_03_05.o
-                0x000053ac                ewbl
+                0x00005384        0xe vem_03_05.o
+                0x00005384                Start_Bootloader
+ .text.eww      0x00005392        0x8 vem_03_05.o
+                0x00005392                eww
+ .text.ewd      0x0000539a        0x8 vem_03_05.o
+                0x0000539a                ewd
+ .text.ewbl     0x000053a2        0x8 vem_03_05.o
+                0x000053a2                ewbl
  .text.CRC_Flash_calc
-                0x000053b4       0x34 vem_03_05.o
+                0x000053aa       0x34 vem_03_05.o
  .text.MemCheckInit
-                0x000053e8       0x34 vem_03_05.o
-                0x000053e8                MemCheckInit
- .text.IntOff   0x0000541c       0x10 vem_03_05.o
-                0x0000541c                IntOff
- .text.IntOn    0x0000542c       0x10 vem_03_05.o
-                0x0000542c                IntOn
+                0x000053de       0x34 vem_03_05.o
+                0x000053de                MemCheckInit
+ .text.IntOff   0x00005412       0x10 vem_03_05.o
+                0x00005412                IntOff
+ .text.IntOn    0x00005422       0x10 vem_03_05.o
+                0x00005422                IntOn
  .text.Modbus_ReadHoldReg
-                0x0000543c       0x68 vem_03_05.o
-                0x0000543c                Modbus_ReadHoldReg
- .text.WdtOn    0x000054a4       0x16 vem_03_05.o
-                0x000054a4                WdtOn
+                0x00005432       0xd0 vem_03_05.o
+                0x00005432                Modbus_ReadHoldReg
+ .text.WdtOn    0x00005502       0x16 vem_03_05.o
+                0x00005502                WdtOn
  .text.Timer16Alloc
-                0x000054ba        0xe vem_03_05.o
-                0x000054ba                Timer16Alloc
+                0x00005518        0xe vem_03_05.o
+                0x00005518                Timer16Alloc
  .text.Timer32Alloc
-                0x000054c8        0xe vem_03_05.o
-                0x000054c8                Timer32Alloc
+                0x00005526        0xe vem_03_05.o
+                0x00005526                Timer32Alloc
  .text.StartTimer8
-                0x000054d6       0x5c vem_03_05.o
-                0x000054d6                StartTimer8
+                0x00005534       0x5c vem_03_05.o
+                0x00005534                StartTimer8
  .text.StartTimer16
-                0x00005532       0x58 vem_03_05.o
-                0x00005532                StartTimer16
+                0x00005590       0x58 vem_03_05.o
+                0x00005590                StartTimer16
  .text.SlavesOn
-                0x0000558a       0x36 vem_03_05.o
+                0x000055e8       0x36 vem_03_05.o
  .text.NextSlave
-                0x000055c0      0x124 vem_03_05.o
+                0x0000561e      0x124 vem_03_05.o
  .text.FailSlave
-                0x000056e4       0xd0 vem_03_05.o
+                0x00005742       0xd0 vem_03_05.o
  .text.StartTimer32
-                0x000057b4       0x7e vem_03_05.o
-                0x000057b4                StartTimer32
+                0x00005812       0x7e vem_03_05.o
+                0x00005812                StartTimer32
  .text.Timer8Stopp
-                0x00005832       0x36 vem_03_05.o
-                0x00005832                Timer8Stopp
+                0x00005890       0x36 vem_03_05.o
+                0x00005890                Timer8Stopp
  .text.Timer16Stopp
-                0x00005868       0x4e vem_03_05.o
-                0x00005868                Timer16Stopp
+                0x000058c6       0x4e vem_03_05.o
+                0x000058c6                Timer16Stopp
  .text.Timer32Stopp
-                0x000058b6       0x56 vem_03_05.o
-                0x000058b6                Timer32Stopp
+                0x00005914       0x56 vem_03_05.o
+                0x00005914                Timer32Stopp
  .text.ResetTimer16
-                0x0000590c       0x42 vem_03_05.o
-                0x0000590c                ResetTimer16
+                0x0000596a       0x42 vem_03_05.o
+                0x0000596a                ResetTimer16
  .text.OnTimeSave
-                0x0000594e       0x1c vem_03_05.o
-                0x0000594e                OnTimeSave
+                0x000059ac       0x1c vem_03_05.o
+                0x000059ac                OnTimeSave
  .text.TimeInit
-                0x0000596a       0x7c vem_03_05.o
-                0x0000596a                TimeInit
+                0x000059c8       0x7c vem_03_05.o
+                0x000059c8                TimeInit
  .text.ScanCycleInit
-                0x000059e6       0x16 vem_03_05.o
-                0x000059e6                ScanCycleInit
+                0x00005a44       0x16 vem_03_05.o
+                0x00005a44                ScanCycleInit
  .text.__vector_12
-                0x000059fc       0x96 vem_03_05.o
-                0x000059fc                __vector_12
+                0x00005a5a       0x96 vem_03_05.o
+                0x00005a5a                __vector_12
  .text.TimersInc
-                0x00005a92      0x1f8 vem_03_05.o
-                0x00005a92                TimersInc
+                0x00005af0      0x1f8 vem_03_05.o
+                0x00005af0                TimersInc
  .text.TimeCycle
-                0x00005c8a       0x3a vem_03_05.o
-                0x00005c8a                TimeCycle
+                0x00005ce8       0x3a vem_03_05.o
+                0x00005ce8                TimeCycle
  .text.Delay_us
-                0x00005cc4       0x30 vem_03_05.o
-                0x00005cc4                Delay_us
+                0x00005d22       0x30 vem_03_05.o
+                0x00005d22                Delay_us
  .text.MB_PLC_Init
-                0x00005cf4        0x6 vem_03_05.o
-                0x00005cf4                MB_PLC_Init
+                0x00005d52        0x6 vem_03_05.o
+                0x00005d52                MB_PLC_Init
  .text.OW_MasterPullLowBus
-                0x00005cfa       0x1a vem_03_05.o
-                0x00005cfa                OW_MasterPullLowBus
+                0x00005d58       0x1a vem_03_05.o
+                0x00005d58                OW_MasterPullLowBus
  .text.OW_MasterReleaseBus
-                0x00005d14       0x1a vem_03_05.o
-                0x00005d14                OW_MasterReleaseBus
+                0x00005d72       0x1a vem_03_05.o
+                0x00005d72                OW_MasterReleaseBus
  .text.GSM_PWRCNTRL_Config
-                0x00005d2e        0x8 vem_03_05.o
-                0x00005d2e                GSM_PWRCNTRL_Config
+                0x00005d8c        0x8 vem_03_05.o
+                0x00005d8c                GSM_PWRCNTRL_Config
  .text.GSM_PWRCNTRL_OFF
-                0x00005d36        0x8 vem_03_05.o
-                0x00005d36                GSM_PWRCNTRL_OFF
+                0x00005d94        0x8 vem_03_05.o
+                0x00005d94                GSM_PWRCNTRL_OFF
  .text.GSM_PWRCNTRL_ON
-                0x00005d3e        0x8 vem_03_05.o
-                0x00005d3e                GSM_PWRCNTRL_ON
+                0x00005d9c        0x8 vem_03_05.o
+                0x00005d9c                GSM_PWRCNTRL_ON
  .text.CTS_Config
-                0x00005d46        0x4 vem_03_05.o
-                0x00005d46                CTS_Config
- .text.CTS_OFF  0x00005d4a        0x4 vem_03_05.o
-                0x00005d4a                CTS_OFF
+                0x00005da4        0x4 vem_03_05.o
+                0x00005da4                CTS_Config
+ .text.CTS_OFF  0x00005da8        0x4 vem_03_05.o
+                0x00005da8                CTS_OFF
  .text.RTS_Config
-                0x00005d4e        0x6 vem_03_05.o
-                0x00005d4e                RTS_Config
+                0x00005dac        0x6 vem_03_05.o
+                0x00005dac                RTS_Config
  .text.__vector_15
-                0x00005d54       0x60 vem_03_05.o
-                0x00005d54                __vector_15
+                0x00005db2       0x60 vem_03_05.o
+                0x00005db2                __vector_15
  .text.__vector_9
-                0x00005db4       0x60 vem_03_05.o
-                0x00005db4                __vector_9
+                0x00005e12       0x60 vem_03_05.o
+                0x00005e12                __vector_9
  .text.SetParity
-                0x00005e14       0x86 vem_03_05.o
-                0x00005e14                SetParity
- .text.SetBAUD  0x00005e9a       0x86 vem_03_05.o
-                0x00005e9a                SetBAUD
+                0x00005e72       0x86 vem_03_05.o
+                0x00005e72                SetParity
+ .text.SetBAUD  0x00005ef8       0x86 vem_03_05.o
+                0x00005ef8                SetBAUD
  .text.MB_Transm
-                0x00005f20       0x84 vem_03_05.o
-                0x00005f20                MB_Transm
+                0x00005f7e       0x84 vem_03_05.o
+                0x00005f7e                MB_Transm
  .text.Modbus_RX
-                0x00005fa4       0xbe vem_03_05.o
-                0x00005fa4                Modbus_RX
- .text.CommErr  0x00006062       0xc2 vem_03_05.o
-                0x00006062                CommErr
+                0x00006002       0xbe vem_03_05.o
+                0x00006002                Modbus_RX
+ .text.CommErr  0x000060c0       0xc2 vem_03_05.o
+                0x000060c0                CommErr
  .text.SetCRC_MB
-                0x00006124       0x38 vem_03_05.o
-                0x00006124                SetCRC_MB
+                0x00006182       0x38 vem_03_05.o
+                0x00006182                SetCRC_MB
  .text.FormData
-                0x0000615c      0x1de vem_03_05.o
+                0x000061ba      0x1de vem_03_05.o
  .text.FormQuery
-                0x0000633a       0x94 vem_03_05.o
+                0x00006398       0x94 vem_03_05.o
  .text.FormSingle
-                0x000063ce       0x54 vem_03_05.o
+                0x0000642c       0x54 vem_03_05.o
  .text.MB_FrameReg
-                0x00006422       0x28 vem_03_05.o
-                0x00006422                MB_FrameReg
+                0x00006480       0x28 vem_03_05.o
+                0x00006480                MB_FrameReg
  .text.MB_S_Timer_ISR
-                0x0000644a      0x5ce vem_03_05.o
-                0x0000644a                MB_S_Timer_ISR
- .text.MB_S_Tx  0x00006a18       0x16 vem_03_05.o
-                0x00006a18                MB_S_Tx
+                0x000064a8      0x5ce vem_03_05.o
+                0x000064a8                MB_S_Timer_ISR
+ .text.MB_S_Tx  0x00006a76       0x16 vem_03_05.o
+                0x00006a76                MB_S_Tx
  .text.MB_S_Init
-                0x00006a2e       0x1e vem_03_05.o
-                0x00006a2e                MB_S_Init
+                0x00006a8c       0x1e vem_03_05.o
+                0x00006a8c                MB_S_Init
  .text.MB_M_Init
-                0x00006a4c       0x7a vem_03_05.o
-                0x00006a4c                MB_M_Init
- .text.MB_Init  0x00006ac6       0x54 vem_03_05.o
-                0x00006ac6                MB_Init
+                0x00006aaa       0x7a vem_03_05.o
+                0x00006aaa                MB_M_Init
+ .text.MB_Init  0x00006b24       0x54 vem_03_05.o
+                0x00006b24                MB_Init
  .text.MB_M_Timer_ISR
-                0x00006b1a      0x560 vem_03_05.o
-                0x00006b1a                MB_M_Timer_ISR
- .text.MB_M_Tx  0x0000707a       0x16 vem_03_05.o
-                0x0000707a                MB_M_Tx
+                0x00006b78      0x560 vem_03_05.o
+                0x00006b78                MB_M_Timer_ISR
+ .text.MB_M_Tx  0x000070d8       0x16 vem_03_05.o
+                0x000070d8                MB_M_Tx
  .text.Modbus_TX
-                0x00007090      0x170 vem_03_05.o
-                0x00007090                Modbus_TX
+                0x000070ee      0x170 vem_03_05.o
+                0x000070ee                Modbus_TX
  .text.MB_M_Cycle
-                0x00007200       0xd2 vem_03_05.o
-                0x00007200                MB_M_Cycle
+                0x0000725e       0xd2 vem_03_05.o
+                0x0000725e                MB_M_Cycle
  .text.MB_Cycle
-                0x000072d2       0x44 vem_03_05.o
-                0x000072d2                MB_Cycle
+                0x00007330       0x44 vem_03_05.o
+                0x00007330                MB_Cycle
  .text.IP_compare_Const
-                0x00007316       0x22 vem_03_05.o
-                0x00007316                IP_compare_Const
+                0x00007374       0x22 vem_03_05.o
+                0x00007374                IP_compare_Const
  .text.IP_E_compare_Const
-                0x00007338       0x60 vem_03_05.o
-                0x00007338                IP_E_compare_Const
+                0x00007396       0x60 vem_03_05.o
+                0x00007396                IP_E_compare_Const
  .text.InitFIFO
-                0x00007398       0x10 vem_03_05.o
-                0x00007398                InitFIFO
+                0x000073f6       0x10 vem_03_05.o
+                0x000073f6                InitFIFO
  .text.GetByteFromFIFO
-                0x000073a8       0xbe vem_03_05.o
-                0x000073a8                GetByteFromFIFO
+                0x00007406       0xbe vem_03_05.o
+                0x00007406                GetByteFromFIFO
  .text.GetStringFromFIFO
-                0x00007466       0x5e vem_03_05.o
-                0x00007466                GetStringFromFIFO
+                0x000074c4       0x5e vem_03_05.o
+                0x000074c4                GetStringFromFIFO
  .text.ForceEndStringFromFIFO
-                0x000074c4       0x24 vem_03_05.o
-                0x000074c4                ForceEndStringFromFIFO
+                0x00007522       0x24 vem_03_05.o
+                0x00007522                ForceEndStringFromFIFO
  .text.GetDataFromFIFO
-                0x000074e8       0x36 vem_03_05.o
-                0x000074e8                GetDataFromFIFO
+                0x00007546       0x36 vem_03_05.o
+                0x00007546                GetDataFromFIFO
  .text.strcpy_EE
-                0x0000751e       0x44 vem_03_05.o
-                0x0000751e                strcpy_EE
+                0x0000757c       0x44 vem_03_05.o
+                0x0000757c                strcpy_EE
  .text.GSM_Init
-                0x00007562       0x6a vem_03_05.o
-                0x00007562                GSM_Init
+                0x000075c0       0x6a vem_03_05.o
+                0x000075c0                GSM_Init
  .text.GSM_Wait_Response
-                0x000075cc       0x16 vem_03_05.o
-                0x000075cc                GSM_Wait_Response
+                0x0000762a       0x16 vem_03_05.o
+                0x0000762a                GSM_Wait_Response
  .text.GSM_Wait_Response_P
-                0x000075e2       0x52 vem_03_05.o
-                0x000075e2                GSM_Wait_Response_P
+                0x00007640       0x52 vem_03_05.o
+                0x00007640                GSM_Wait_Response_P
  .text.GSM_Wait_Char
-                0x00007634       0x42 vem_03_05.o
-                0x00007634                GSM_Wait_Char
- .text.GSM_TX   0x00007676       0x18 vem_03_05.o
-                0x00007676                GSM_TX
+                0x00007692       0x42 vem_03_05.o
+                0x00007692                GSM_Wait_Char
+ .text.GSM_TX   0x000076d4       0x18 vem_03_05.o
+                0x000076d4                GSM_TX
  .text.__vector_20
-                0x0000768e       0x56 vem_03_05.o
-                0x0000768e                __vector_20
+                0x000076ec       0x56 vem_03_05.o
+                0x000076ec                __vector_20
  .text.DI_State
-                0x000076e4       0x24 vem_03_05.o
-                0x000076e4                DI_State
+                0x00007742       0x24 vem_03_05.o
+                0x00007742                DI_State
  .text.DI_Status
-                0x00007708       0x24 vem_03_05.o
-                0x00007708                DI_Status
- .text.DigitIn  0x0000772c       0x96 vem_03_05.o
-                0x0000772c                DigitIn
+                0x00007766       0x24 vem_03_05.o
+                0x00007766                DI_Status
+ .text.DigitIn  0x0000778a       0x96 vem_03_05.o
+                0x0000778a                DigitIn
  .text.SetDigOut
-                0x000077c2       0x24 vem_03_05.o
-                0x000077c2                SetDigOut
+                0x00007820       0x24 vem_03_05.o
+                0x00007820                SetDigOut
  .text.ResDigOut
-                0x000077e6       0x26 vem_03_05.o
-                0x000077e6                ResDigOut
+                0x00007844       0x26 vem_03_05.o
+                0x00007844                ResDigOut
  .text.DigitOut
-                0x0000780c       0x66 vem_03_05.o
-                0x0000780c                DigitOut
- .text.DO_Init  0x00007872       0x28 vem_03_05.o
-                0x00007872                DO_Init
- .text.Pow10    0x0000789a       0x1c vem_03_05.o
-                0x0000789a                Pow10
- .text.PowL10   0x000078b6       0x1e vem_03_05.o
-                0x000078b6                PowL10
+                0x0000786a       0x66 vem_03_05.o
+                0x0000786a                DigitOut
+ .text.DO_Init  0x000078d0       0x28 vem_03_05.o
+                0x000078d0                DO_Init
+ .text.Pow10    0x000078f8       0x1c vem_03_05.o
+                0x000078f8                Pow10
+ .text.PowL10   0x00007914       0x1e vem_03_05.o
+                0x00007914                PowL10
  .text.OW_MasterTx_Command
-                0x000078d4       0x76 vem_03_05.o
-                0x000078d4                OW_MasterTx_Command
+                0x00007932       0x76 vem_03_05.o
+                0x00007932                OW_MasterTx_Command
  .text.OW_MasterRx_Data
-                0x0000794a       0x72 vem_03_05.o
-                0x0000794a                OW_MasterRx_Data
+                0x000079a8       0x72 vem_03_05.o
+                0x000079a8                OW_MasterRx_Data
  .text.OneWire_Init
-                0x000079bc       0x18 vem_03_05.o
-                0x000079bc                OneWire_Init
+                0x00007a1a       0x18 vem_03_05.o
+                0x00007a1a                OneWire_Init
  .text.OneWireStartADC
-                0x000079d4       0xb6 vem_03_05.o
-                0x000079d4                OneWireStartADC
+                0x00007a32       0xb6 vem_03_05.o
+                0x00007a32                OneWireStartADC
  .text.OneWireReadTemp
-                0x00007a8a      0x1a8 vem_03_05.o
-                0x00007a8a                OneWireReadTemp
- .text.DS18B20  0x00007c32       0x52 vem_03_05.o
-                0x00007c32                DS18B20
- .text.PutEnum  0x00007c84       0x4c vem_03_05.o
-                0x00007c84                PutEnum
- .text.PutVal   0x00007cd0       0xf6 vem_03_05.o
-                0x00007cd0                PutVal
+                0x00007ae8      0x1a8 vem_03_05.o
+                0x00007ae8                OneWireReadTemp
+ .text.DS18B20  0x00007c90       0x52 vem_03_05.o
+                0x00007c90                DS18B20
+ .text.PutEnum  0x00007ce2       0x4c vem_03_05.o
+                0x00007ce2                PutEnum
+ .text.PutVal   0x00007d2e       0xf6 vem_03_05.o
+                0x00007d2e                PutVal
  .text.Put_sVal
-                0x00007dc6      0x154 vem_03_05.o
-                0x00007dc6                Put_sVal
+                0x00007e24      0x154 vem_03_05.o
+                0x00007e24                Put_sVal
  .text.Put_zVal
-                0x00007f1a       0xf6 vem_03_05.o
-                0x00007f1a                Put_zVal
+                0x00007f78       0xf6 vem_03_05.o
+                0x00007f78                Put_zVal
  .text.Put_zVal_h
-                0x00008010       0x6c vem_03_05.o
-                0x00008010                Put_zVal_h
- .text.PutDVal  0x0000807c      0x126 vem_03_05.o
-                0x0000807c                PutDVal
+                0x0000806e       0x6c vem_03_05.o
+                0x0000806e                Put_zVal_h
+ .text.PutDVal  0x000080da      0x126 vem_03_05.o
+                0x000080da                PutDVal
  .text.Put_sDVal
-                0x000081a2      0x1f0 vem_03_05.o
-                0x000081a2                Put_sDVal
+                0x00008200      0x1f0 vem_03_05.o
+                0x00008200                Put_sDVal
  .text.Put_zDVal
-                0x00008392      0x126 vem_03_05.o
-                0x00008392                Put_zDVal
+                0x000083f0      0x126 vem_03_05.o
+                0x000083f0                Put_zDVal
  .text.Put_FFVal
-                0x000084b8       0x7c vem_03_05.o
-                0x000084b8                Put_FFVal
+                0x00008516       0x7c vem_03_05.o
+                0x00008516                Put_FFVal
  .text.Put_GFVal
-                0x00008534       0xa6 vem_03_05.o
-                0x00008534                Put_GFVal
+                0x00008592       0xa6 vem_03_05.o
+                0x00008592                Put_GFVal
  .text.Put_TextValAlignLeft
-                0x000085da       0x86 vem_03_05.o
-                0x000085da                Put_TextValAlignLeft
- .text.HideMsg  0x00008660       0x1c vem_03_05.o
-                0x00008660                HideMsg
- .text.WebInit  0x0000867c       0x66 vem_03_05.o
-                0x0000867c                WebInit
+                0x00008638       0x86 vem_03_05.o
+                0x00008638                Put_TextValAlignLeft
+ .text.HideMsg  0x000086be       0x1c vem_03_05.o
+                0x000086be                HideMsg
+ .text.WebInit  0x000086da       0x66 vem_03_05.o
+                0x000086da                WebInit
  .text.WebPresicionHanler
-                0x000086e2       0x7a vem_03_05.o
-                0x000086e2                WebPresicionHanler
+                0x00008740       0x7a vem_03_05.o
+                0x00008740                WebPresicionHanler
  .text.WebBuf2Field
-                0x0000875c      0x6e4 vem_03_05.o
+                0x000087ba      0x6e4 vem_03_05.o
  .text.strcmp_PP
-                0x00008e40       0x3c vem_03_05.o
-                0x00008e40                strcmp_PP
+                0x00008e9e       0x3c vem_03_05.o
+                0x00008e9e                strcmp_PP
  .text.strcmp_E
-                0x00008e7c       0x48 vem_03_05.o
-                0x00008e7c                strcmp_E
+                0x00008eda       0x48 vem_03_05.o
+                0x00008eda                strcmp_E
  .text.SeekTagFORM
-                0x00008ec4       0x78 vem_03_05.o
-                0x00008ec4                SeekTagFORM
+                0x00008f22       0x78 vem_03_05.o
+                0x00008f22                SeekTagFORM
  .text.SeekTagA_HREF
-                0x00008f3c       0x78 vem_03_05.o
-                0x00008f3c                SeekTagA_HREF
+                0x00008f9a       0x78 vem_03_05.o
+                0x00008f9a                SeekTagA_HREF
  .text.SeekTagIMG_SRC
-                0x00008fb4       0x82 vem_03_05.o
-                0x00008fb4                SeekTagIMG_SRC
+                0x00009012       0x82 vem_03_05.o
+                0x00009012                SeekTagIMG_SRC
  .text.Web_Login_Error
-                0x00009036      0x116 vem_03_05.o
-                0x00009036                Web_Login_Error
+                0x00009094      0x116 vem_03_05.o
+                0x00009094                Web_Login_Error
  .text.WebRequest
-                0x0000914c      0x418 vem_03_05.o
-                0x0000914c                WebRequest
+                0x000091aa      0x418 vem_03_05.o
+                0x000091aa                WebRequest
  .text.EM_InitFIFO
-                0x00009564       0x18 vem_03_05.o
-                0x00009564                EM_InitFIFO
+                0x000095c2       0x18 vem_03_05.o
+                0x000095c2                EM_InitFIFO
  .text.EM_SetUARTParam
-                0x0000957c       0xe6 vem_03_05.o
-                0x0000957c                EM_SetUARTParam
+                0x000095da       0xe6 vem_03_05.o
+                0x000095da                EM_SetUARTParam
  .text.ApplyUARTParam
-                0x00009662       0x58 vem_03_05.o
-                0x00009662                ApplyUARTParam
+                0x000096c0       0x58 vem_03_05.o
+                0x000096c0                ApplyUARTParam
  .text.ChangeUARTParam
-                0x000096ba       0x44 vem_03_05.o
-                0x000096ba                ChangeUARTParam
+                0x00009718       0x44 vem_03_05.o
+                0x00009718                ChangeUARTParam
  .text.EMeter_ReInit
-                0x000096fe       0x4e vem_03_05.o
-                0x000096fe                EMeter_ReInit
+                0x0000975c       0x4e vem_03_05.o
+                0x0000975c                EMeter_ReInit
  .text.GSM_CloseTransparent
-                0x0000974c       0x20 vem_03_05.o
-                0x0000974c                GSM_CloseTransparent
- .text.GSM_Transparent2Modbus
-                0x0000976c        0xc vem_03_05.o
-                0x0000976c                GSM_Transparent2Modbus
+                0x000097aa       0x20 vem_03_05.o
+                0x000097aa                GSM_CloseTransparent
  .text.EMeter_Init
-                0x00009778       0x3a vem_03_05.o
-                0x00009778                EMeter_Init
+                0x000097ca       0x3a vem_03_05.o
+                0x000097ca                EMeter_Init
  .text.USART_Init
-                0x000097b2       0x48 vem_03_05.o
-                0x000097b2                USART_Init
+                0x00009804       0x48 vem_03_05.o
+                0x00009804                USART_Init
  .text.EMeter_RX
-                0x000097fa       0x6e vem_03_05.o
-                0x000097fa                EMeter_RX
+                0x0000984c       0x6e vem_03_05.o
+                0x0000984c                EMeter_RX
  .text.__vector_30
-                0x00009868       0x68 vem_03_05.o
-                0x00009868                __vector_30
+                0x000098ba       0x68 vem_03_05.o
+                0x000098ba                __vector_30
  .text.EMeter_TX
-                0x000098d0       0x1e vem_03_05.o
-                0x000098d0                EMeter_TX
+                0x00009922       0x1e vem_03_05.o
+                0x00009922                EMeter_TX
  .text.__vector_32
-                0x000098ee       0x68 vem_03_05.o
-                0x000098ee                __vector_32
+                0x00009940       0x68 vem_03_05.o
+                0x00009940                __vector_32
  .text.EMeter_Link
-                0x00009956        0xc vem_03_05.o
-                0x00009956                EMeter_Link
+                0x000099a8        0xc vem_03_05.o
+                0x000099a8                EMeter_Link
  .text.IsEMReady
-                0x00009962        0xe vem_03_05.o
-                0x00009962                IsEMReady
- .text.EMRead   0x00009970       0x12 vem_03_05.o
-                0x00009970                EMRead
+                0x000099b4        0xe vem_03_05.o
+                0x000099b4                IsEMReady
+ .text.EMRead   0x000099c2       0x12 vem_03_05.o
+                0x000099c2                EMRead
  .text.GPRS_AppInit
-                0x00009982       0x38 vem_03_05.o
-                0x00009982                GPRS_AppInit
+                0x000099d4       0x38 vem_03_05.o
+                0x000099d4                GPRS_AppInit
  .text.GPRS_AddHeader
-                0x000099ba       0x56 vem_03_05.o
-                0x000099ba                GPRS_AddHeader
+                0x00009a0c       0x56 vem_03_05.o
+                0x00009a0c                GPRS_AddHeader
  .text.GPRS_CurDataSend
-                0x00009a10      0x438 vem_03_05.o
-                0x00009a10                GPRS_CurDataSend
+                0x00009a62      0x438 vem_03_05.o
+                0x00009a62                GPRS_CurDataSend
  .text.GPRS_SendData
-                0x00009e48       0xca vem_03_05.o
-                0x00009e48                GPRS_SendData
+                0x00009e9a       0xca vem_03_05.o
+                0x00009e9a                GPRS_SendData
  .text.GPRS_NewMsg
-                0x00009f12       0xc0 vem_03_05.o
-                0x00009f12                GPRS_NewMsg
+                0x00009f64       0xc0 vem_03_05.o
+                0x00009f64                GPRS_NewMsg
  .text.GPRS_SendNewCrash
-                0x00009fd2       0x20 vem_03_05.o
-                0x00009fd2                GPRS_SendNewCrash
+                0x0000a024       0x20 vem_03_05.o
+                0x0000a024                GPRS_SendNewCrash
  .text.GPRS_SendRepCrash
-                0x00009ff2       0x26 vem_03_05.o
-                0x00009ff2                GPRS_SendRepCrash
+                0x0000a044       0x26 vem_03_05.o
+                0x0000a044                GPRS_SendRepCrash
  .text.GPRS_Check_PSW
-                0x0000a018       0x3c vem_03_05.o
-                0x0000a018                GPRS_Check_PSW
+                0x0000a06a       0x3c vem_03_05.o
+                0x0000a06a                GPRS_Check_PSW
  .text.GPRS_Get_Session_ID
-                0x0000a054       0x80 vem_03_05.o
-                0x0000a054                GPRS_Get_Session_ID
+                0x0000a0a6       0x80 vem_03_05.o
+                0x0000a0a6                GPRS_Get_Session_ID
  .text.GPRS_RemoteDisplayControl
-                0x0000a0d4       0x14 vem_03_05.o
-                0x0000a0d4                GPRS_RemoteDisplayControl
+                0x0000a126       0x14 vem_03_05.o
+                0x0000a126                GPRS_RemoteDisplayControl
  .text.GPRS_SendDisplay
-                0x0000a0e8       0x42 vem_03_05.o
-                0x0000a0e8                GPRS_SendDisplay
+                0x0000a13a       0x42 vem_03_05.o
+                0x0000a13a                GPRS_SendDisplay
  .text.GPRS_SendChange
-                0x0000a12a       0x1c vem_03_05.o
-                0x0000a12a                GPRS_SendChange
+                0x0000a17c       0x1c vem_03_05.o
+                0x0000a17c                GPRS_SendChange
  .text.GPRS_ReadParamReply
-                0x0000a146       0x60 vem_03_05.o
-                0x0000a146                GPRS_ReadParamReply
+                0x0000a198       0x60 vem_03_05.o
+                0x0000a198                GPRS_ReadParamReply
  .text.GPRS_WriteParamReply
-                0x0000a1a6       0x58 vem_03_05.o
-                0x0000a1a6                GPRS_WriteParamReply
+                0x0000a1f8       0x58 vem_03_05.o
+                0x0000a1f8                GPRS_WriteParamReply
  .text.GPRS_Param
-                0x0000a1fe       0x90 vem_03_05.o
-                0x0000a1fe                GPRS_Param
+                0x0000a250       0x90 vem_03_05.o
+                0x0000a250                GPRS_Param
  .text.GPRS_CriticalCMD_Process
-                0x0000a28e       0x48 vem_03_05.o
-                0x0000a28e                GPRS_CriticalCMD_Process
+                0x0000a2e0       0x48 vem_03_05.o
+                0x0000a2e0                GPRS_CriticalCMD_Process
  .text.GPRS_Param00
-                0x0000a2d6       0xd8 vem_03_05.o
-                0x0000a2d6                GPRS_Param00
+                0x0000a328       0xd8 vem_03_05.o
+                0x0000a328                GPRS_Param00
  .text.GPRS_Param01
-                0x0000a3ae       0x22 vem_03_05.o
-                0x0000a3ae                GPRS_Param01
+                0x0000a400       0x22 vem_03_05.o
+                0x0000a400                GPRS_Param01
  .text.GPRS_Param02
-                0x0000a3d0       0x22 vem_03_05.o
-                0x0000a3d0                GPRS_Param02
+                0x0000a422       0x22 vem_03_05.o
+                0x0000a422                GPRS_Param02
  .text.GPRS_Param03
-                0x0000a3f2       0x24 vem_03_05.o
-                0x0000a3f2                GPRS_Param03
+                0x0000a444       0x24 vem_03_05.o
+                0x0000a444                GPRS_Param03
  .text.GPRS_Param04
-                0x0000a416       0x24 vem_03_05.o
-                0x0000a416                GPRS_Param04
+                0x0000a468       0x24 vem_03_05.o
+                0x0000a468                GPRS_Param04
  .text.GPRS_Param05
-                0x0000a43a       0x24 vem_03_05.o
-                0x0000a43a                GPRS_Param05
+                0x0000a48c       0x24 vem_03_05.o
+                0x0000a48c                GPRS_Param05
  .text.GPRS_Param06
-                0x0000a45e       0x46 vem_03_05.o
-                0x0000a45e                GPRS_Param06
+                0x0000a4b0       0x46 vem_03_05.o
+                0x0000a4b0                GPRS_Param06
  .text.GPRS_Param07
-                0x0000a4a4       0x24 vem_03_05.o
-                0x0000a4a4                GPRS_Param07
+                0x0000a4f6       0x24 vem_03_05.o
+                0x0000a4f6                GPRS_Param07
  .text.GPRS_Param08
-                0x0000a4c8       0x24 vem_03_05.o
-                0x0000a4c8                GPRS_Param08
+                0x0000a51a       0x24 vem_03_05.o
+                0x0000a51a                GPRS_Param08
  .text.GPRS_Param09
-                0x0000a4ec      0x148 vem_03_05.o
-                0x0000a4ec                GPRS_Param09
+                0x0000a53e      0x148 vem_03_05.o
+                0x0000a53e                GPRS_Param09
  .text.GPRS_Param10
-                0x0000a634       0x3e vem_03_05.o
-                0x0000a634                GPRS_Param10
+                0x0000a686       0x3e vem_03_05.o
+                0x0000a686                GPRS_Param10
  .text.GPRS_Param11
-                0x0000a672       0x46 vem_03_05.o
-                0x0000a672                GPRS_Param11
+                0x0000a6c4       0x46 vem_03_05.o
+                0x0000a6c4                GPRS_Param11
  .text.GPRS_Parameter
-                0x0000a6b8       0x82 vem_03_05.o
-                0x0000a6b8                GPRS_Parameter
+                0x0000a70a       0x82 vem_03_05.o
+                0x0000a70a                GPRS_Parameter
  .text.ReadParamBlock
-                0x0000a73a      0x144 vem_03_05.o
-                0x0000a73a                ReadParamBlock
+                0x0000a78c      0x144 vem_03_05.o
+                0x0000a78c                ReadParamBlock
  .text.GPRS_ReciveData
-                0x0000a87e      0x128 vem_03_05.o
-                0x0000a87e                GPRS_ReciveData
+                0x0000a8d0      0x128 vem_03_05.o
+                0x0000a8d0                GPRS_ReciveData
  .text.GPRS_Arbitr
-                0x0000a9a6       0xa4 vem_03_05.o
-                0x0000a9a6                GPRS_Arbitr
+                0x0000a9f8       0xa4 vem_03_05.o
+                0x0000a9f8                GPRS_Arbitr
  .text.GPRS_App
-                0x0000aa4a       0xb0 vem_03_05.o
-                0x0000aa4a                GPRS_App
+                0x0000aa9c       0xb0 vem_03_05.o
+                0x0000aa9c                GPRS_App
  .text.GSMApply
-                0x0000aafa       0x56 vem_03_05.o
-                0x0000aafa                GSMApply
+                0x0000ab4c       0xa6 vem_03_05.o
+                0x0000ab4c                GSMApply
  .text.Modbus_App
-                0x0000ab50      0x1fe vem_03_05.o
-                0x0000ab50                Modbus_App
+                0x0000abf2      0x1fe vem_03_05.o
+                0x0000abf2                Modbus_App
  .text.StartDebug
-                0x0000ad4e       0x28 vem_03_05.o
-                0x0000ad4e                StartDebug
+                0x0000adf0       0x28 vem_03_05.o
+                0x0000adf0                StartDebug
  .text.StopDebug
-                0x0000ad76       0x14 vem_03_05.o
-                0x0000ad76                StopDebug
+                0x0000ae18       0x14 vem_03_05.o
+                0x0000ae18                StopDebug
  .text.SendDebug
-                0x0000ad8a       0x3c vem_03_05.o
-                0x0000ad8a                SendDebug
- .text.GSM_RX   0x0000adc6       0x80 vem_03_05.o
-                0x0000adc6                GSM_RX
+                0x0000ae2c       0x3c vem_03_05.o
+                0x0000ae2c                SendDebug
+ .text.GSM_RX   0x0000ae68       0x80 vem_03_05.o
+                0x0000ae68                GSM_RX
  .text.__vector_18
-                0x0000ae46       0x56 vem_03_05.o
-                0x0000ae46                __vector_18
+                0x0000aee8       0x56 vem_03_05.o
+                0x0000aee8                __vector_18
  .text.GSM_SendFirstChar
-                0x0000ae9c       0x3e vem_03_05.o
-                0x0000ae9c                GSM_SendFirstChar
+                0x0000af3e       0x3e vem_03_05.o
+                0x0000af3e                GSM_SendFirstChar
  .text.GSM_SendCR
-                0x0000aeda       0x4a vem_03_05.o
-                0x0000aeda                GSM_SendCR
+                0x0000af7c       0x4a vem_03_05.o
+                0x0000af7c                GSM_SendCR
  .text.GSM_Execute_Command
-                0x0000af24       0x38 vem_03_05.o
-                0x0000af24                GSM_Execute_Command
+                0x0000afc6       0x38 vem_03_05.o
+                0x0000afc6                GSM_Execute_Command
  .text.GSM_AddHeaderSendData
-                0x0000af5c       0x18 vem_03_05.o
-                0x0000af5c                GSM_AddHeaderSendData
+                0x0000affe       0x18 vem_03_05.o
+                0x0000affe                GSM_AddHeaderSendData
  .text.GSM_SendData
-                0x0000af74       0x18 vem_03_05.o
-                0x0000af74                GSM_SendData
+                0x0000b016       0x18 vem_03_05.o
+                0x0000b016                GSM_SendData
  .text.GSM_Cycle
-                0x0000af8c     0x199e vem_03_05.o
-                0x0000af8c                GSM_Cycle
+                0x0000b02e     0x19c2 vem_03_05.o
+                0x0000b02e                GSM_Cycle
  .text.USART_Cycle
-                0x0000c92a       0x72 vem_03_05.o
-                0x0000c92a                USART_Cycle
+                0x0000c9f0       0x68 vem_03_05.o
+                0x0000c9f0                USART_Cycle
  .text.WebServer
-                0x0000c99c      0x890 vem_03_05.o
-                0x0000c99c                WebServer
- .text.GSM_DRE  0x0000d22c       0xfe vem_03_05.o
-                0x0000d22c                GSM_DRE
+                0x0000ca58      0x890 vem_03_05.o
+                0x0000ca58                WebServer
+ .text.GSM_DRE  0x0000d2e8       0xfe vem_03_05.o
+                0x0000d2e8                GSM_DRE
  .text.__vector_19
-                0x0000d32a       0x56 vem_03_05.o
-                0x0000d32a                __vector_19
+                0x0000d3e6       0x56 vem_03_05.o
+                0x0000d3e6                __vector_19
  .text.Debug_DRE
-                0x0000d380       0x3c vem_03_05.o
-                0x0000d380                Debug_DRE
+                0x0000d43c       0x3c vem_03_05.o
+                0x0000d43c                Debug_DRE
  .text.EMeter_DRE
-                0x0000d3bc       0xfc vem_03_05.o
-                0x0000d3bc                EMeter_DRE
+                0x0000d478       0xfc vem_03_05.o
+                0x0000d478                EMeter_DRE
  .text.__vector_31
-                0x0000d4b8       0x68 vem_03_05.o
-                0x0000d4b8                __vector_31
+                0x0000d574       0x68 vem_03_05.o
+                0x0000d574                __vector_31
  .text.ToggleLED
-                0x0000d520       0x1a vem_03_05.o
-                0x0000d520                ToggleLED
+                0x0000d5dc       0x1a vem_03_05.o
+                0x0000d5dc                ToggleLED
  .text.ApplInit
-                0x0000d53a        0xc vem_03_05.o
-                0x0000d53a                ApplInit
+                0x0000d5f6        0xc vem_03_05.o
+                0x0000d5f6                ApplInit
  .text.ApplCycle
-                0x0000d546      0x132 vem_03_05.o
-                0x0000d546                ApplCycle
+                0x0000d602      0x13a vem_03_05.o
+                0x0000d602                ApplCycle
  .text.startup.main
-                0x0000d678       0x5c vem_03_05.o
-                0x0000d678                main
+                0x0000d73c       0x5c vem_03_05.o
+                0x0000d73c                main
  .text.avr-libc
-                0x0000d6d4       0xb6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(random.o)
-                0x0000d76c                random_r
-                0x0000d770                random
-                0x0000d778                srandom
+                0x0000d798       0xb6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(random.o)
+                0x0000d830                random_r
+                0x0000d834                random
+                0x0000d83c                srandom
  .text.avr-libc
-                0x0000d78a        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(exit.o)
-                0x0000d78a                exit
+                0x0000d84e        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(exit.o)
+                0x0000d84e                exit
  .text.avr-libc
-                0x0000d790       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(memcpy_P.o)
-                0x0000d790                memcpy_P
+                0x0000d854       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(memcpy_P.o)
+                0x0000d854                memcpy_P
  .text.avr-libc
-                0x0000d7a2       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strchr_P.o)
-                0x0000d7a2                strchr_P
+                0x0000d866       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strchr_P.o)
+                0x0000d866                strchr_P
  .text.avr-libc
-                0x0000d7b8       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcmp_P.o)
-                0x0000d7b8                strcmp_P
+                0x0000d87c       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcmp_P.o)
+                0x0000d87c                strcmp_P
  .text.avr-libc
-                0x0000d7ca        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcpy_P.o)
-                0x0000d7ca                strcpy_P
+                0x0000d88e        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcpy_P.o)
+                0x0000d88e                strcpy_P
  .text.avr-libc
-                0x0000d7d8       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strlcpy_P.o)
-                0x0000d7d8                strlcpy_P
+                0x0000d89c       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strlcpy_P.o)
+                0x0000d89c                strlcpy_P
  .text.avr-libc
-                0x0000d800       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strlen_P.o)
-                0x0000d800                __strlen_P
+                0x0000d8c4       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strlen_P.o)
+                0x0000d8c4                __strlen_P
  .text.avr-libc
-                0x0000d812       0x1c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strncmp_P.o)
-                0x0000d812                strncmp_P
+                0x0000d8d6       0x1c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strncmp_P.o)
+                0x0000d8d6                strncmp_P
  .text.avr-libc
-                0x0000d82e       0x34 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strstr_P.o)
-                0x0000d82e                strstr_P
+                0x0000d8f2       0x34 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strstr_P.o)
+                0x0000d8f2                strstr_P
  .text.avr-libc
-                0x0000d862       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(memcpy.o)
-                0x0000d862                memcpy
+                0x0000d926       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(memcpy.o)
+                0x0000d926                memcpy
  .text.avr-libc
-                0x0000d874       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strchr.o)
-                0x0000d874                strchr
+                0x0000d938       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strchr.o)
+                0x0000d938                strchr
  .text.avr-libc
-                0x0000d88a       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcmp.o)
-                0x0000d88a                strcmp
+                0x0000d94e       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcmp.o)
+                0x0000d94e                strcmp
  .text.avr-libc
-                0x0000d89c        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcpy.o)
-                0x0000d89c                strcpy
+                0x0000d960        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strcpy.o)
+                0x0000d960                strcpy
  .text.avr-libc
-                0x0000d8aa       0x1c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strncmp.o)
-                0x0000d8aa                strncmp
+                0x0000d96e       0x1c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strncmp.o)
+                0x0000d96e                strncmp
  .text.avr-libc
-                0x0000d8c6       0x5e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(sprintf.o)
-                0x0000d8c6                sprintf
+                0x0000d98a       0x5e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(sprintf.o)
+                0x0000d98a                sprintf
  .text.avr-libc
-                0x0000d924       0x5e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(sprintf_p.o)
-                0x0000d924                sprintf_P
+                0x0000d9e8       0x5e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(sprintf_p.o)
+                0x0000d9e8                sprintf_P
  .text.avr-libc
-                0x0000d982       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(sscanf.o)
-                0x0000d982                sscanf
+                0x0000da46       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(sscanf.o)
+                0x0000da46                sscanf
  .text.avr-libc
-                0x0000d9c6       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(sscanf_p.o)
-                0x0000d9c6                sscanf_P
+                0x0000da8a       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(sscanf_p.o)
+                0x0000da8a                sscanf_P
  .text.avr-libc.fplib
-                0x0000da0a        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(divsf3.o)
-                0x0000da0a                __divsf3
+                0x0000dace        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(divsf3.o)
+                0x0000dace                __divsf3
  .text.avr-libc.fplib
-                0x0000da0e       0xcc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(divsf3x.o)
-                0x0000da24                __divsf3x
-                0x0000da28                __divsf3_pse
+                0x0000dad2       0xcc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(divsf3x.o)
+                0x0000dae8                __divsf3x
+                0x0000daec                __divsf3_pse
  .text.avr-libc.fplib
-                0x0000dada        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fixsfsi.o)
-                0x0000dada                __fixsfsi
+                0x0000db9e        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fixsfsi.o)
+                0x0000db9e                __fixsfsi
  .text.avr-libc.fplib
-                0x0000dae4       0x58 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fixunssfsi.o)
-                0x0000dae4                __fixunssfsi
+                0x0000dba8       0x58 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fixunssfsi.o)
+                0x0000dba8                __fixunssfsi
  .text.avr-libc.fplib
-                0x0000db3c       0x7a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(floatsisf.o)
-                0x0000db3c                __floatunsisf
-                0x0000db40                __floatsisf
+                0x0000dc00       0x7a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(floatsisf.o)
+                0x0000dc00                __floatunsisf
+                0x0000dc04                __floatsisf
  .text.avr-libc.fplib
-                0x0000dbb6        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_inf.o)
-                0x0000dbb6                __fp_inf
+                0x0000dc7a        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_inf.o)
+                0x0000dc7a                __fp_inf
  .text.avr-libc.fplib
-                0x0000dbc2        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_nan.o)
-                0x0000dbc2                __fp_nan
+                0x0000dc86        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_nan.o)
+                0x0000dc86                __fp_nan
  .text.avr-libc.fplib
-                0x0000dbc8        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_pscA.o)
-                0x0000dbc8                __fp_pscA
+                0x0000dc8c        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_pscA.o)
+                0x0000dc8c                __fp_pscA
  .text.avr-libc.fplib
-                0x0000dbd6        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_pscB.o)
-                0x0000dbd6                __fp_pscB
+                0x0000dc9a        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_pscB.o)
+                0x0000dc9a                __fp_pscB
  .text.avr-libc.fplib
-                0x0000dbe4       0x22 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_round.o)
-                0x0000dbe4                __fp_round
+                0x0000dca8       0x22 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_round.o)
+                0x0000dca8                __fp_round
  .text.avr-libc.fplib
-                0x0000dc06       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_split3.o)
-                0x0000dc06                __fp_split3
-                0x0000dc16                __fp_splitA
+                0x0000dcca       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_split3.o)
+                0x0000dcca                __fp_split3
+                0x0000dcda                __fp_splitA
  .text.avr-libc.fplib
-                0x0000dc4a        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_zero.o)
-                0x0000dc4a                __fp_zero
-                0x0000dc4c                __fp_szero
+                0x0000dd0e        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fp_zero.o)
+                0x0000dd0e                __fp_zero
+                0x0000dd10                __fp_szero
  .text.avr-libc.fplib
-                0x0000dc58        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(mulsf3.o)
-                0x0000dc58                __mulsf3
+                0x0000dd1c        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(mulsf3.o)
+                0x0000dd1c                __mulsf3
  .text.avr-libc.fplib
-                0x0000dc5c       0xc2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(mulsf3x.o)
-                0x0000dc70                __mulsf3x
-                0x0000dc74                __mulsf3_pse
+                0x0000dd20       0xc2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(mulsf3x.o)
+                0x0000dd34                __mulsf3x
+                0x0000dd38                __mulsf3_pse
  .text.avr-libc
-                0x0000dd1e      0x3f6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
-                0x0000dd1e                vfprintf
+                0x0000dde2      0x3f6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
+                0x0000dde2                vfprintf
  .text.avr-libc
-                0x0000e114      0x5a8 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(vfscanf_std.o)
-                0x0000e44e                vfscanf
+                0x0000e1d8      0x5a8 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(vfscanf_std.o)
+                0x0000e512                vfscanf
  .text.avr-libc
-                0x0000e6bc       0x20 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128.o)
-                0x0000e6bc                __eerd_block_m128
-                0x0000e6c0                __eerd_blraw_m128
+                0x0000e780       0x20 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eerd_block_atmega128.o)
+                0x0000e780                __eerd_block_m128
+                0x0000e784                __eerd_blraw_m128
  .text.avr-libc
-                0x0000e6dc       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eerd_byte_atmega128.o)
-                0x0000e6dc                __eerd_byte_m128
+                0x0000e7a0       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eerd_byte_atmega128.o)
+                0x0000e7a0                __eerd_byte_m128
  .text.avr-libc
-                0x0000e6ec        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eerd_dword_atmega128.o)
-                0x0000e6ec                __eerd_float_m128
-                0x0000e6ec                __eerd_dword_m128
+                0x0000e7b0        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eerd_dword_atmega128.o)
+                0x0000e7b0                __eerd_float_m128
+                0x0000e7b0                __eerd_dword_m128
  .text.avr-libc
-                0x0000e6f8        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eerd_word_atmega128.o)
-                0x0000e6f8                __eerd_word_m128
+                0x0000e7bc        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eerd_word_atmega128.o)
+                0x0000e7bc                __eerd_word_m128
  .text.avr-libc
-                0x0000e704       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eewr_block_atmega128.o)
-                0x0000e704                __eewr_block_m128
+                0x0000e7c8       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eewr_block_atmega128.o)
+                0x0000e7c8                __eewr_block_m128
  .text.avr-libc
-                0x0000e718       0x1a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eewr_byte_atmega128.o)
-                0x0000e718                __eewr_byte_m128
-                0x0000e71a                __eewr_r18_m128
+                0x0000e7dc       0x1a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eewr_byte_atmega128.o)
+                0x0000e7dc                __eewr_byte_m128
+                0x0000e7de                __eewr_r18_m128
  .text.avr-libc
-                0x0000e732       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eewr_dword_atmega128.o)
-                0x0000e732                __eewr_dword_m128
-                0x0000e732                __eewr_float_m128
+                0x0000e7f6       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eewr_dword_atmega128.o)
+                0x0000e7f6                __eewr_dword_m128
+                0x0000e7f6                __eewr_float_m128
  .text.avr-libc
-                0x0000e742        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eewr_word_atmega128.o)
-                0x0000e742                __eewr_word_m128
+                0x0000e806        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(eewr_word_atmega128.o)
+                0x0000e806                __eewr_word_m128
  .text.avr-libc
-                0x0000e74c       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(isspace.o)
-                0x0000e74c                isspace
+                0x0000e810       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(isspace.o)
+                0x0000e810                isspace
  .text.avr-libc
-                0x0000e75c       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strnlen_P.o)
-                0x0000e75c                strnlen_P
+                0x0000e820       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strnlen_P.o)
+                0x0000e820                strnlen_P
  .text.avr-libc
-                0x0000e772       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strnlen.o)
-                0x0000e772                strnlen
+                0x0000e836       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(strnlen.o)
+                0x0000e836                strnlen
  .text.avr-libc
-                0x0000e788       0x7c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fgetc.o)
-                0x0000e788                fgetc
+                0x0000e84c       0x7c c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fgetc.o)
+                0x0000e84c                fgetc
  .text.avr-libc
-                0x0000e804       0x64 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fputc.o)
-                0x0000e804                fputc
+                0x0000e8c8       0x64 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(fputc.o)
+                0x0000e8c8                fputc
  .text.avr-libc
-                0x0000e868       0x32 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(ungetc.o)
-                0x0000e868                ungetc
+                0x0000e92c       0x32 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(ungetc.o)
+                0x0000e92c                ungetc
  .text.avr-libc
-                0x0000e89a       0xbc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(ultoa_invert.o)
-                0x0000e89a                __ultoa_invert
+                0x0000e95e       0xbc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(ultoa_invert.o)
+                0x0000e95e                __ultoa_invert
  .text.avr-libc
-                0x0000e956        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(cty_isfalse.o)
-                0x0000e956                __ctype_isfalse
-                0x0000e95a                __ctype_istrue
+                0x0000ea1a        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(cty_isfalse.o)
+                0x0000ea1a                __ctype_isfalse
+                0x0000ea1e                __ctype_istrue
  .text.libgcc.div
-                0x0000e95c       0x18 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodqi4.o)
-                0x0000e95c                __udivmodqi4
+                0x0000ea20       0x18 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodqi4.o)
+                0x0000ea20                __udivmodqi4
  .text.libgcc.div
-                0x0000e974       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodhi4.o)
-                0x0000e974                __udivmodhi4
+                0x0000ea38       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodhi4.o)
+                0x0000ea38                __udivmodhi4
  .text.libgcc.div
-                0x0000e99c       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_divmodhi4.o)
-                0x0000e99c                _div
-                0x0000e99c                __divmodhi4
+                0x0000ea60       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_divmodhi4.o)
+                0x0000ea60                _div
+                0x0000ea60                __divmodhi4
  .text.libgcc.div
-                0x0000e9c4       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodsi4.o)
-                0x0000e9c4                __udivmodsi4
+                0x0000ea88       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_udivmodsi4.o)
+                0x0000ea88                __udivmodsi4
  .text.libgcc.div
-                0x0000ea08       0x2e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_divmodsi4.o)
-                0x0000ea08                __divmodsi4
+                0x0000eacc       0x2e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_divmodsi4.o)
+                0x0000eacc                __divmodsi4
  .text.libgcc.div
-                0x0000ea36       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_negsi2.o)
-                0x0000ea36                __negsi2
- .text.libgcc   0x0000ea46        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_tablejump.o)
-                0x0000ea46                __tablejump2__
-                0x0000ea4a                __tablejump__
+                0x0000eafa       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_negsi2.o)
+                0x0000eafa                __negsi2
+ .text.libgcc   0x0000eb0a        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_tablejump.o)
+                0x0000eb0a                __tablejump2__
+                0x0000eb0e                __tablejump__
  .text.libgcc.mul
-                0x0000ea52       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_muluhisi3.o)
-                0x0000ea52                __muluhisi3
+                0x0000eb16       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_muluhisi3.o)
+                0x0000eb16                __muluhisi3
  .text.libgcc.mul
-                0x0000ea68       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_mulshisi3.o)
-                0x0000ea68                __mulshisi3
-                0x0000ea6e                __mulohisi3
+                0x0000eb2c       0x10 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_mulshisi3.o)
+                0x0000eb2c                __mulshisi3
+                0x0000eb32                __mulohisi3
  .text.libgcc.mul
-                0x0000ea78       0xa0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_muldi3.o)
-                0x0000ea78                __muldi3
+                0x0000eb3c       0xa0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_muldi3.o)
+                0x0000eb3c                __muldi3
  .text.libgcc.mul
-                0x0000eb18       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_muldi3_6.o)
-                0x0000eb18                __muldi3_6
- .text.libgcc   0x0000eb2a       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_adddi3.o)
-                0x0000eb2a                __adddi3
+                0x0000ebdc       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_muldi3_6.o)
+                0x0000ebdc                __muldi3_6
+ .text.libgcc   0x0000ebee       0x12 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_adddi3.o)
+                0x0000ebee                __adddi3
  .text.libgcc.mul
-                0x0000eb3c       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_umulhisi3.o)
-                0x0000eb3c                __umulhisi3
-                0x0000eb5a                . = ALIGN (0x2)
+                0x0000ec00       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_umulhisi3.o)
+                0x0000ec00                __umulhisi3
+                0x0000ec1e                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000eb5a        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
-                0x0000eb5a                _exit
+ .fini9         0x0000ec1e        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+                0x0000ec1e                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -3024,11 +3022,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000eb5a        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
+ .fini0         0x0000ec1e        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x0000eb5e                _etext = .
+                0x0000ec22                _etext = .
 
-.data           0x00800100      0x134 load address 0x0000eb5e
+.data           0x00800100      0x13a load address 0x0000ec22
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800100        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr51\libc.a(random.o)
@@ -3073,276 +3071,276 @@ END GROUP
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800113       0xc2 vem_03_05.o
-                                 0xcb (size before relaxing)
- .rodata.CSWTCH.1344
-                0x008001d5        0xa vem_03_05.o
+                0x00800113       0xc8 vem_03_05.o
+                                 0xd4 (size before relaxing)
+ .rodata.CSWTCH.1345
+                0x008001db        0xa vem_03_05.o
+ .rodata.CSWTCH.1340
+                0x008001e5        0x7 vem_03_05.o
  .rodata.CSWTCH.1339
-                0x008001df        0x7 vem_03_05.o
- .rodata.CSWTCH.1338
-                0x008001e6        0xe vem_03_05.o
+                0x008001ec        0xe vem_03_05.o
  .rodata.Web_Logins
-                0x008001f4       0x40 vem_03_05.o
-                0x008001f4                Web_Logins
+                0x008001fa       0x40 vem_03_05.o
+                0x008001fa                Web_Logins
  *(.gnu.linkonce.d*)
-                0x00800234                . = ALIGN (0x2)
-                0x00800234                _edata = .
-                0x00800234                PROVIDE (__data_end, .)
+                0x0080023a                . = ALIGN (0x2)
+                0x0080023a                _edata = .
+                0x0080023a                PROVIDE (__data_end, .)
 
-.bss            0x00800234      0xc05
-                0x00800234                PROVIDE (__bss_start, .)
+.bss            0x0080023a      0xc11
+                0x0080023a                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.PacketByteCount.4685
-                0x00800234        0x2 vem_03_05.o
- .bss.ptrIF.4683
-                0x00800236        0x2 vem_03_05.o
- .bss.StartTimeoutWaitRequest.4686
-                0x00800238        0x1 vem_03_05.o
- .bss.ptrPage.4684
-                0x00800239        0x2 vem_03_05.o
- .bss.match.4660
-                0x0080023b        0x1 vem_03_05.o
- .bss.match.4645
-                0x0080023c        0x1 vem_03_05.o
- .bss.match.4630
-                0x0080023d        0x1 vem_03_05.o
- .bss.Count.2565
+ .bss.PacketByteCount.4686
+                0x0080023a        0x2 vem_03_05.o
+ .bss.ptrIF.4684
+                0x0080023c        0x2 vem_03_05.o
+ .bss.StartTimeoutWaitRequest.4687
                 0x0080023e        0x1 vem_03_05.o
+ .bss.ptrPage.4685
+                0x0080023f        0x2 vem_03_05.o
+ .bss.match.4661
+                0x00800241        0x1 vem_03_05.o
+ .bss.match.4646
+                0x00800242        0x1 vem_03_05.o
+ .bss.match.4631
+                0x00800243        0x1 vem_03_05.o
+ .bss.Count.2565
+                0x00800244        0x1 vem_03_05.o
  .bss.Timer10ms.2168
-                0x0080023f        0x1 vem_03_05.o
+                0x00800245        0x1 vem_03_05.o
  .bss.E_Meter_RAM
-                0x00800240       0x10 vem_03_05.o
-                0x00800240                E_Meter_RAM
+                0x00800246       0x10 vem_03_05.o
+                0x00800246                E_Meter_RAM
  .bss.DS18B20_Mode
-                0x00800250        0x1 vem_03_05.o
-                0x00800250                DS18B20_Mode
+                0x00800256        0x1 vem_03_05.o
+                0x00800256                DS18B20_Mode
  .bss.TD_GSM_Reset
-                0x00800251        0x1 vem_03_05.o
- .bss.TD_RSSI   0x00800252        0x1 vem_03_05.o
+                0x00800257        0x1 vem_03_05.o
+ .bss.TD_RSSI   0x00800258        0x1 vem_03_05.o
  .bss.TD_TCP_Connect
-                0x00800253        0x1 vem_03_05.o
- .bss.TD_GSM    0x00800254        0x1 vem_03_05.o
+                0x00800259        0x1 vem_03_05.o
+ .bss.TD_GSM    0x0080025a        0x1 vem_03_05.o
  .bss.sendsWithoutReconnect
-                0x00800255        0x1 vem_03_05.o
-                0x00800255                sendsWithoutReconnect
- .bss.TD_MB     0x00800256        0x1 vem_03_05.o
+                0x0080025b        0x1 vem_03_05.o
+                0x0080025b                sendsWithoutReconnect
+ .bss.TD_MB     0x0080025c        0x1 vem_03_05.o
  .bss.SlaveSkip
-                0x00800257        0x4 vem_03_05.o
- .bss.Try       0x0080025b        0x1 vem_03_05.o
+                0x0080025d        0x4 vem_03_05.o
+ .bss.Try       0x00800261        0x1 vem_03_05.o
  .bss.LastProcSingle
-                0x0080025c        0x1 vem_03_05.o
+                0x00800262        0x1 vem_03_05.o
  .bss.MB_SingleQuery
-                0x0080025d        0x8 vem_03_05.o
- .bss.MB_Err    0x00800265        0x1 vem_03_05.o
+                0x00800263        0x8 vem_03_05.o
+ .bss.MB_Err    0x0080026b        0x1 vem_03_05.o
  .bss.TickCounter
-                0x00800266        0x1 vem_03_05.o
- .bss.TD_Scan   0x00800267        0x1 vem_03_05.o
+                0x0080026c        0x1 vem_03_05.o
+ .bss.TD_Scan   0x0080026d        0x1 vem_03_05.o
  .bss.Timer32Flg
-                0x00800268        0x6 vem_03_05.o
+                0x0080026e        0x6 vem_03_05.o
  .bss.Timer16Flg
-                0x0080026e        0x9 vem_03_05.o
+                0x00800274        0x9 vem_03_05.o
  .bss.Timer8Flg
-                0x00800277        0x7 vem_03_05.o
+                0x0080027d        0x7 vem_03_05.o
  .bss.Timer8_ISR_Flg
-                0x0080027e        0x2 vem_03_05.o
- .bss.Timer32   0x00800280       0xa0 vem_03_05.o
- .bss.Timer16   0x00800320       0x80 vem_03_05.o
- .bss.Timer8    0x008003a0       0x30 vem_03_05.o
+                0x00800284        0x2 vem_03_05.o
+ .bss.Timer32   0x00800286       0xa0 vem_03_05.o
+ .bss.Timer16   0x00800326       0x80 vem_03_05.o
+ .bss.Timer8    0x008003a6       0x30 vem_03_05.o
  .bss.Timer8_ISR
-                0x008003d0        0x8 vem_03_05.o
+                0x008003d6        0x8 vem_03_05.o
  .bss.interru_enub_flg
-                0x008003d8        0x1 vem_03_05.o
+                0x008003de        0x1 vem_03_05.o
  *(COMMON)
- COMMON         0x008003d9      0xa60 vem_03_05.o
-                0x008003d9                MBCoil1
-                0x008003da                ModbusMode
-                0x008003db                MB_State
-                0x008003dc                EM_Day
-                0x008003dd                GPRS_CriticalCMD
-                0x008003de                Ub
-                0x008003e0                GSM_Temp
-                0x008003e1                TempNum
-                0x008003e2                WebImgSrcHiddenCnt
-                0x008003e3                WebInputHiddenCnt
-                0x008003e4                MB_M_TimeOff
-                0x008003e5                EM_Korpus_Min_new
-                0x008003e9                EMeterTypeRAM
-                0x008003ea                WebDataCnt
-                0x008003ec                Ia
-                0x008003ee                EM_Klemm_Cnt_prev
-                0x008003f0                MBInput1
-                0x008003f1                DS18B20_Error
-                0x008003f2                MB_NativeAddr
-                0x008003f3                EM_RX_FIFO
-                0x008004f2                GSM_RX_FIFO
-                0x008005ec                Temperature
-                0x008005ee                Web_Passw_Str
-                0x008005f9                GPRS_RetryTimer
-                0x008005fb                LG_ZMR110_READ_FLAG
-                0x008005ff                GSM_RX_FIFO_End
-                0x00800600                CurrSlave
-                0x00800601                EMeter_RxStr_Offset
-                0x00800603                Web_Login_Code
-                0x00800604                GSM_LED
-                0x00800605                GPRS_RECONNECT_timer
-                0x00800606                EM_UART_Parity
-                0x00800607                CurrQuery
-                0x00800608                EM_Sec
-                0x00800609                GPRS_TD_CrashSendRetry
-                0x0080060a                COMM_LED
-                0x0080060b                GPRS_ChangeReplySize
-                0x0080060c                ICCID2
-                0x00800610                EM_Korpus_Min_prev
-                0x00800614                EM_Klemm_Cnt_new
-                0x00800616                TD_WebSeedGenerator
-                0x00800617                Usupply
-                0x00800619                TempWebAction
-                0x0080061a                MB_M_Period
-                0x0080061c                MB_SingleState
-                0x0080061d                Timer1min
-                0x0080061e                MaxScanCycle
-                0x0080061f                GSM_RSSI
-                0x00800620                GSM_Tx
-                0x00800621                GSM_State
-                0x00800622                WebHrefHiddenCnt
-                0x00800623                SESSID_Str
-                0x00800637                GPRS_ChangeData
-                0x00800736                EMeter_RxStr
-                0x00800834                Web_LoginAttempt
-                0x00800835                MB_Master_MaxCycle
-                0x00800837                GPRS_Data_In
-                0x00800869                IP_SendMask
-                0x0080086a                WebStrLen
-                0x0080086b                GSM_Modem
-                0x0080086c                EM_ID_Str
-                0x00800875                GSM_RX_FIFO_Begin
-                0x00800876                MBHoldReg1
-                0x008008c2                MB_M_Try
-                0x008008c3                GPRS_LoginLevel
-                0x008008c4                DigInput
-                0x008008c7                MB_Frame_Sz
-                0x008008c8                SMS_Data_Out
-                0x0080092c                ScanCycle
-                0x0080092d                EM_Magnit_Cnt_new
-                0x0080092f                TD_SetCRLFinPOST_RQ
-                0x00800930                EM_UART_StopBits
-                0x00800931                GPRS_FlgSz_Out
-                0x00800932                TD_WaitLCDRefresh
-                0x00800933                ScanCount
-                0x00800935                Ib
-                0x00800937                MB_Master_Cycle
-                0x00800939                GSM_CSD
-                0x0080093a                TD_UART_Soft
-                0x0080093b                EM_Min
-                0x0080093c                GPRS_TD_SessionIDGenerator
-                0x0080093d                TD_FlowDelay
-                0x0080093e                EM_BufferReadEnable
-                0x0080093f                EMeter_TxCharN
-                0x00800940                Transparent_Application_state
-                0x00800941                EM_FailCode
-                0x00800945                GSMTxSz
-                0x00800946                EM_BCC
-                0x00800947                EMeter_TxFlag
-                0x00800948                GPRSInLen
-                0x00800949                GSM_StateBeforeReset
-                0x0080094a                GPRS_SendRQ
-                0x0080094b                GPRS_FlgSz_In
-                0x0080094c                EM_Magnit_Min_new
-                0x00800950                LiveTime
-                0x00800954                SMS_FlgSz_Out
-                0x00800955                TD_WebSessTimeout
-                0x00800956                GPRS_Flags
-                0x00800957                TD_WaitReqTimout
-                0x00800958                TD_DS18B20Read
-                0x00800959                GSM_BER
-                0x0080095a                Web_POST
-                0x0080095b                EM_Hour
-                0x0080095c                MB_BitRate_RAM
-                0x0080095d                EM_RX_FIFO_Begin
-                0x0080095e                ScanPerSec
-                0x00800960                ICCID
-                0x00800968                GPRSOutLen
-                0x00800969                GPRS_Protocol_Out
-                0x0080096a                GSM_Control
-                0x0080096b                WebSession
-                0x0080096c                GSM_RX_FIFOMax_Transp
-                0x0080096d                Timer1sOld
-                0x0080096e                Ic
-                0x00800970                DigOutput
-                0x00800973                EM_Year
-                0x00800974                EM_HalfBufferStart
-                0x00800976                GSM_RxStr
-                0x008009da                EM_Month
-                0x008009db                EM_Klemm_Min_prev
-                0x008009df                GSM_DebugMode
-                0x008009e0                DS18B20_Status
-                0x008009e1                AppProtocol
-                0x008009e2                EM_Magnit_Cnt_prev
-                0x008009e4                Web_Login_Str
-                0x008009f4                GPRS_CrashData
-                0x00800a58                EM_UART_Rate
-                0x00800a59                AccessLevel
-                0x00800a5a                GSM_RX_FIFOOverFlow
-                0x00800a5b                EM_RX_FIFOMax
-                0x00800a5c                EM_PowerActive
-                0x00800a5e                EM_Mode
-                0x00800a5f                EM_UART_BitQt
-                0x00800a60                Uc
-                0x00800a62                UART_Soft
-                0x00800a63                Transparent
-                0x00800a64                MemFail
-                0x00800a65                MBInReg1
-                0x00800ae5                GSM_RX_FIFO_End_Transp
-                0x00800ae6                EMeter_TxStr
-                0x00800af5                EM_Magnit_Min_prev
-                0x00800af9                GPRS_TD_CriticalCMD
-                0x00800afa                GSM_RX_FIFOMax
-                0x00800afb                Timer1s
-                0x00800afc                Connection_timer
-                0x00800afd                GPRS_Session_ID
-                0x00800aff                MB_M_Timeout
-                0x00800b00                MB_TimerFlag
-                0x00800b01                SlaveOff
-                0x00800b05                GPRS_DataTimer
-                0x00800b07                EM_Korpus_Cnt_new
-                0x00800b09                GSM_MyIP
-                0x00800b0d                EM_Klemm_Min_new
-                0x00800b11                EM_RX_FIFOOverFlow
-                0x00800b12                CurrMsg
-                0x00800b14                ICCID1
-                0x00800b16                MB_CPT
-                0x00800b26                GPRS_Data_Out
-                0x00800c25                TD_EMeter
-                0x00800c26                GSM_TxStr
-                0x00800d25                EM_RX_FIFO_End
-                0x00800d26                RxBufOverFlow
-                0x00800d27                GSM_ClientIP
-                0x00800d2b                EMeter_RxCharN
-                0x00800d2d                TCP_CONNECT_check_timer
-                0x00800d2e                Ua
-                0x00800d30                EM_Korpus_Cnt_prev
-                0x00800d32                GSM_RxCharN
-                0x00800d33                GSM_TxCharN
-                0x00800d34                EMeter_TxSz
-                0x00800d35                MB_Frame
-                0x00800e35                Timer1hour
-                0x00800e37                GSM_RX_FIFOOverFlow_Transp
-                0x00800e38                GSM_MultiCon
-                0x00800e39                PROVIDE (__bss_end, .)
-                0x0000eb5e                __data_load_start = LOADADDR (.data)
-                0x0000ec92                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008003df      0xa6c vem_03_05.o
+                0x008003df                MBCoil1
+                0x008003e0                ModbusMode
+                0x008003e1                MB_State
+                0x008003e2                EM_Day
+                0x008003e3                GPRS_CriticalCMD
+                0x008003e4                Ub
+                0x008003e6                GSM_Temp
+                0x008003e7                TempNum
+                0x008003e8                WebImgSrcHiddenCnt
+                0x008003e9                WebInputHiddenCnt
+                0x008003ea                MB_M_TimeOff
+                0x008003eb                EM_Korpus_Min_new
+                0x008003ef                EMeterTypeRAM
+                0x008003f0                WebDataCnt
+                0x008003f2                Ia
+                0x008003f4                EM_Klemm_Cnt_prev
+                0x008003f6                MBInput1
+                0x008003f7                DS18B20_Error
+                0x008003f8                MB_NativeAddr
+                0x008003f9                EM_RX_FIFO
+                0x008004f8                GSM_RX_FIFO
+                0x008005f2                Temperature
+                0x008005f4                Web_Passw_Str
+                0x008005ff                GPRS_RetryTimer
+                0x00800601                LG_ZMR110_READ_FLAG
+                0x00800605                GSM_RX_FIFO_End
+                0x00800606                CurrSlave
+                0x00800607                EMeter_RxStr_Offset
+                0x00800609                Web_Login_Code
+                0x0080060a                GSM_LED
+                0x0080060b                GPRS_RECONNECT_timer
+                0x0080060c                EM_UART_Parity
+                0x0080060d                CurrQuery
+                0x0080060e                EM_Sec
+                0x0080060f                GPRS_TD_CrashSendRetry
+                0x00800610                COMM_LED
+                0x00800611                GPRS_ChangeReplySize
+                0x00800612                ICCID2
+                0x00800616                EM_Korpus_Min_prev
+                0x0080061a                EM_Klemm_Cnt_new
+                0x0080061c                TD_WebSeedGenerator
+                0x0080061d                Usupply
+                0x0080061f                TempWebAction
+                0x00800620                MB_M_Period
+                0x00800622                MB_SingleState
+                0x00800623                Timer1min
+                0x00800624                MaxScanCycle
+                0x00800625                GSM_RSSI
+                0x00800626                GSM_Tx
+                0x00800627                GSM_State
+                0x00800628                WebHrefHiddenCnt
+                0x00800629                SESSID_Str
+                0x0080063d                GPRS_ChangeData
+                0x0080073c                EMeter_RxStr
+                0x0080083a                Web_LoginAttempt
+                0x0080083b                MB_Master_MaxCycle
+                0x0080083d                GPRS_Data_In
+                0x0080086f                IP_SendMask
+                0x00800870                WebStrLen
+                0x00800871                GSM_Modem
+                0x00800872                EM_ID_Str
+                0x0080087b                GSM_RX_FIFO_Begin
+                0x0080087c                MBHoldReg1
+                0x008008d4                MB_M_Try
+                0x008008d5                GPRS_LoginLevel
+                0x008008d6                DigInput
+                0x008008d9                MB_Frame_Sz
+                0x008008da                SMS_Data_Out
+                0x0080093e                ScanCycle
+                0x0080093f                EM_Magnit_Cnt_new
+                0x00800941                TD_SetCRLFinPOST_RQ
+                0x00800942                EM_UART_StopBits
+                0x00800943                GPRS_FlgSz_Out
+                0x00800944                TD_WaitLCDRefresh
+                0x00800945                ScanCount
+                0x00800947                Ib
+                0x00800949                MB_Master_Cycle
+                0x0080094b                GSM_CSD
+                0x0080094c                TD_UART_Soft
+                0x0080094d                EM_Min
+                0x0080094e                GPRS_TD_SessionIDGenerator
+                0x0080094f                TD_FlowDelay
+                0x00800950                EM_BufferReadEnable
+                0x00800951                EMeter_TxCharN
+                0x00800952                Transparent_Application_state
+                0x00800953                EM_FailCode
+                0x00800957                GSMTxSz
+                0x00800958                EM_BCC
+                0x00800959                EMeter_TxFlag
+                0x0080095a                GPRSInLen
+                0x0080095b                GSM_StateBeforeReset
+                0x0080095c                GPRS_SendRQ
+                0x0080095d                GPRS_FlgSz_In
+                0x0080095e                EM_Magnit_Min_new
+                0x00800962                LiveTime
+                0x00800966                SMS_FlgSz_Out
+                0x00800967                TD_WebSessTimeout
+                0x00800968                GPRS_Flags
+                0x00800969                TD_WaitReqTimout
+                0x0080096a                TD_DS18B20Read
+                0x0080096b                GSM_BER
+                0x0080096c                Web_POST
+                0x0080096d                EM_Hour
+                0x0080096e                MB_BitRate_RAM
+                0x0080096f                EM_RX_FIFO_Begin
+                0x00800970                ScanPerSec
+                0x00800972                ICCID
+                0x0080097a                GPRSOutLen
+                0x0080097b                GPRS_Protocol_Out
+                0x0080097c                GSM_Control
+                0x0080097d                WebSession
+                0x0080097e                GSM_RX_FIFOMax_Transp
+                0x0080097f                Timer1sOld
+                0x00800980                Ic
+                0x00800982                DigOutput
+                0x00800985                EM_Year
+                0x00800986                EM_HalfBufferStart
+                0x00800988                GSM_RxStr
+                0x008009ec                EM_Month
+                0x008009ed                EM_Klemm_Min_prev
+                0x008009f1                GSM_DebugMode
+                0x008009f2                DS18B20_Status
+                0x008009f3                AppProtocol
+                0x008009f4                EM_Magnit_Cnt_prev
+                0x008009f6                Web_Login_Str
+                0x00800a06                GPRS_CrashData
+                0x00800a6a                EM_UART_Rate
+                0x00800a6b                AccessLevel
+                0x00800a6c                GSM_RX_FIFOOverFlow
+                0x00800a6d                EM_RX_FIFOMax
+                0x00800a6e                EM_PowerActive
+                0x00800a70                EM_Mode
+                0x00800a71                EM_UART_BitQt
+                0x00800a72                Uc
+                0x00800a74                UART_Soft
+                0x00800a75                Transparent
+                0x00800a76                MemFail
+                0x00800a77                MBInReg1
+                0x00800af7                GSM_RX_FIFO_End_Transp
+                0x00800af8                EMeter_TxStr
+                0x00800b07                EM_Magnit_Min_prev
+                0x00800b0b                GPRS_TD_CriticalCMD
+                0x00800b0c                GSM_RX_FIFOMax
+                0x00800b0d                Timer1s
+                0x00800b0e                Connection_timer
+                0x00800b0f                GPRS_Session_ID
+                0x00800b11                MB_M_Timeout
+                0x00800b12                MB_TimerFlag
+                0x00800b13                SlaveOff
+                0x00800b17                GPRS_DataTimer
+                0x00800b19                EM_Korpus_Cnt_new
+                0x00800b1b                GSM_MyIP
+                0x00800b1f                EM_Klemm_Min_new
+                0x00800b23                EM_RX_FIFOOverFlow
+                0x00800b24                CurrMsg
+                0x00800b26                ICCID1
+                0x00800b28                MB_CPT
+                0x00800b38                GPRS_Data_Out
+                0x00800c37                TD_EMeter
+                0x00800c38                GSM_TxStr
+                0x00800d37                EM_RX_FIFO_End
+                0x00800d38                RxBufOverFlow
+                0x00800d39                GSM_ClientIP
+                0x00800d3d                EMeter_RxCharN
+                0x00800d3f                TCP_CONNECT_check_timer
+                0x00800d40                Ua
+                0x00800d42                EM_Korpus_Cnt_prev
+                0x00800d44                GSM_RxCharN
+                0x00800d45                GSM_TxCharN
+                0x00800d46                EMeter_TxSz
+                0x00800d47                MB_Frame
+                0x00800e47                Timer1hour
+                0x00800e49                GSM_RX_FIFOOverFlow_Transp
+                0x00800e4a                GSM_MultiCon
+                0x00800e4b                PROVIDE (__bss_end, .)
+                0x0000ec22                __data_load_start = LOADADDR (.data)
+                0x0000ed5c                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800e39        0x0
-                0x00800e39                PROVIDE (__noinit_start, .)
+.noinit         0x00800e4b        0x0
+                0x00800e4b                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00800e39                PROVIDE (__noinit_end, .)
-                0x00800e39                _end = .
-                0x00800e39                PROVIDE (__heap_start, .)
+                0x00800e4b                PROVIDE (__noinit_end, .)
+                0x00800e4b                _end = .
+                0x00800e4b                PROVIDE (__heap_start, .)
 
-.eeprom         0x00810000      0x1ac
+.eeprom         0x00810000      0x1ae
  *(.eeprom*)
- .eeprom        0x00810000      0x1ac vem_03_05.o
+ .eeprom        0x00810000      0x1ae vem_03_05.o
                 0x00810000                Password
                 0x00810008                CurrDataPeriod
                 0x0081000a                AutoSend
@@ -3371,12 +3369,13 @@ END GROUP
                 0x0081012a                UDP_ServerPort
                 0x00810132                TCP_ServerIP
                 0x00810142                UDP_ServerIP
-                0x00810152                GPRS_apn_psw
-                0x00810166                GPRS_apn_user_name
-                0x0081017a                GPRS_apn
-                0x0081019d                MB_Param
-                0x008101a4                DateBackUp
-                0x008101ac                __eeprom_end = .
+                0x00810152                SerialNum
+                0x00810154                GPRS_apn_psw
+                0x00810168                GPRS_apn_user_name
+                0x0081017c                GPRS_apn
+                0x0081019f                MB_Param
+                0x008101a6                DateBackUp
+                0x008101ae                __eeprom_end = .
 
 .fuse
  *(.fuse)
@@ -3450,30 +3449,30 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x1494a
+.debug_info     0x00000000    0x14bfa
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000    0x1494a vem_03_05.o
+ .debug_info    0x00000000    0x14bfa vem_03_05.o
 
 .debug_abbrev   0x00000000      0x9d8
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x9d8 vem_03_05.o
 
-.debug_line     0x00000000     0x3e32
+.debug_line     0x00000000     0x3e86
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000     0x3e32 vem_03_05.o
+ .debug_line    0x00000000     0x3e86 vem_03_05.o
 
 .debug_frame    0x00000000     0x24d8
  *(.debug_frame)
  .debug_frame   0x00000000     0x24d8 vem_03_05.o
 
-.debug_str      0x00000000     0x420d
+.debug_str      0x00000000     0x4217
  *(.debug_str)
- .debug_str     0x00000000     0x420d vem_03_05.o
-                               0x4610 (size before relaxing)
+ .debug_str     0x00000000     0x4217 vem_03_05.o
+                               0x461a (size before relaxing)
 
-.debug_loc      0x00000000     0xff88
+.debug_loc      0x00000000    0x100dc
  *(.debug_loc)
- .debug_loc     0x00000000     0xff88 vem_03_05.o
+ .debug_loc     0x00000000    0x100dc vem_03_05.o
 
 .debug_macinfo
  *(.debug_macinfo)

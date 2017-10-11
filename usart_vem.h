@@ -137,7 +137,7 @@ USART_Cycle(void)
 	//	EMeter_Cycle();
 		if(!(PINA & (1<<PA0))){
 			if(Timer8Stopp(TD_UART_Soft)){
-				if(Transparent) GSM_Transparent2Modbus();	// если Modbus - то выходим из Transparent
+				//if(Transparent) GSM_Transparent2Modbus();	// если Modbus - то выходим из Transparent
 				cli();
 				MB_Init();
 				UART_Soft = 1;

@@ -52,13 +52,13 @@
 	//----------- Modbus
 	uint8_t MBCoil1[1];
 	uint8_t MBInput1[1];
-	uint16_t MBHoldReg1[38];
+	uint16_t MBHoldReg1[44];
 	uint16_t MBInReg1[64];
 	#define Modbus_Map_List {	\
 		{					\
 			MBCoil1,	8,	\
 			MBInput1,	8,	\
-			MBHoldReg1,	38,	\
+			MBHoldReg1,	44,	\
 			MBInReg1,	30	\
 		}					\
 	}
@@ -358,7 +358,7 @@ ApplCycle()
 	}
 	// Управление светодиодом DO_GSM
 	if(GSM_State == GSM_ProtocolMode){
-		if(GSM_LED) ToggleLED(DO_GSM);
+		if(GSM_LED||UART_Soft) ToggleLED(DO_GSM);
 		else SetDigOut(DO_GSM);
 	}
 	else{

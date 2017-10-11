@@ -242,9 +242,9 @@ prog_char RESP_CONNECT_9600[] = "CONNECT 9600";
 prog_char RESP_STATE_CONNECT_OK[] = "STATE: CONNECT OK";
 
 prog_char ESC_SEQ[] = "+++";
-
+uint16_t SerialNum EEMEM = 990;
 // KEYWORDS
-prog_char MODEM_EQUAL[]		= "Modem=990";
+prog_char MODEM_EQUAL[]		= "Modem=";
 // ~~~~~~~~~~~
 // AT-commands
 // ~~~~~~~~~~~
@@ -1227,8 +1227,7 @@ inline static void GSM_Auto(){
 			break;
 		case GSM_SEND_IDENTIFICATION:
 			if(GSM_Flag & (1<<flg_TxCStr)){
-				GSMTxSz = strlen_P(MODEM_EQUAL);
-				sprintf_P(GSM_TxStr, MODEM_EQUAL);
+				GSMTxSz = sprintf(GSM_TxStr, "Modem=%u",(unsigned int)erw(&SerialNum));
 				GSM_SendFirstChar();
 				StartTimer16(TD_GSM, 500*GSM_DEBUG_DELAY);
 				GSM_State++;
@@ -1268,6 +1267,7 @@ inline static void GSM_Auto(){
 						break;
 					default:break;
 				}
+				GSM_RX_FIFO_End_Transp = GSM_RX_FIFO_End;
 				GSM_State = GSM_ProtocolMode;
 			}
 			break;
@@ -1767,7 +1767,7 @@ inline static void GSM_Auto(){
 
 		case GSM_ProtocolMode:	//анализируем первые пинятых 4 байта
 			Transparent_Application_state = WAIT_REQUEST;
-			Transparent = 1;
+			if(!UART_Soft){Transparent = 1;}else{Transparent = 0;}
 			if(Timer16Stopp(GPRS_RECONNECT_timer)){
 				GSM_State = GSM_Swtch2CommandMode;
 				Transparent_Application_state = RECONNECT;
