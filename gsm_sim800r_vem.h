@@ -387,7 +387,7 @@ uint8_t TCP_CONNECT_check_timer;
 uint8_t GPRS_RECONNECT_timer;
 uint8_t GSM_StateBeforeReset;
 
-uint16_t Connection_check_period = 3000;
+uint16_t Connection_check_period = 6000;
 uint16_t GPRS_RECONNECT_period   = 60000;
 uint8_t Connection_timer;
 uint8_t Transparent_Application_state;
@@ -814,6 +814,7 @@ GSM_RX(void)
 			GSM_RX_FIFOOverFlow_Transp = 1;
 			GSM_RX_FIFOMax_Transp = GSM_RX_FIFO_SIZE;
 		}
+		StartTimer16(TCP_CONNECT_check_timer, Connection_check_period );
 
 	}
 
