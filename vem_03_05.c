@@ -73,8 +73,9 @@
 //-----------
 #define GSM_DEBUG_DELAY 1
 
-#define GPRS_APN		"freecool.mts.net             "
+//#define GPRS_APN		"freecool.mts.net             "
 //#define GPRS_APN		"vpni.kyivstar.net            "
+#define GPRS_APN		"internet                     "
 #define GPRS_USER_NAME 	"                   "
 #define GPRS_PSW 		"                   "
 

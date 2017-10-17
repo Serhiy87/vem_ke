@@ -272,6 +272,7 @@ prog_char AT_CIPMODE_0[]	= "AT+CIPMODE=0";
 prog_char AT_CIPMODE_1[]	= "AT+CIPMODE=1";
 prog_char AT_CIPMUX_0[]		= "AT+CIPMUX=0";
 prog_char AT_CIPMUX_1[]		= "AT+CIPMUX=1";
+prog_char AT_CIPTKA[]		= "AT+CIPTKA=1,30,30,1";
 
 prog_char AT_CGATT[]		= "AT+CGATT=1";
 //prog_char AT_CIPCSGP[]		= "AT+CIPCSGP=1,\""GPRS_APN"\"\r";
@@ -322,6 +323,7 @@ enum {
 	GSM_SEND_CSMP,		GSM_WAIT_CSMP_OK,
 	GSM_SEND_CIPMUX, 	GSM_WAIT_CIPMUX_OK,
 	GSM_SEND_CIPMODE, 	GSM_WAIT_CIPMODE_OK,
+	GSM_SEND_CIPTKA,    GSM_WAIT_CIPTKA_OK,
 
 	GSM_WAIT_1,
 
@@ -1117,7 +1119,12 @@ inline static void GSM_Auto(){
 				StartTimer16(TD_GSM, 1000);
 			}
 			break;
-
+		case GSM_SEND_CIPTKA:
+			GSM_Execute_Command(AT_CIPTKA, 100*GSM_DEBUG_DELAY); GSM_State++;
+			break;
+		case GSM_WAIT_CIPTKA_OK:
+			if(GSM_Wait_Response_P(RESP_OK, GSM_ReStart1)) GSM_State++;
+			break;		
 		//------------------------
 		case GSM_WAIT_1:
 /*			GetStringFromFIFO();		// чтобы не было переполнения FIFO
@@ -1769,12 +1776,12 @@ inline static void GSM_Auto(){
 		case GSM_ProtocolMode:	//анализируем первые пинятых 4 байта
 			Transparent_Application_state = WAIT_REQUEST;
 			if(!UART_Soft){Transparent = 1;}else{Transparent = 0;}
-			if(Timer16Stopp(GPRS_RECONNECT_timer)){
+		/*	if(Timer16Stopp(GPRS_RECONNECT_timer)){
 				GSM_State = GSM_Swtch2CommandMode;
 				Transparent_Application_state = RECONNECT;
 				Transparent = 0;
 				break;
-			}
+			}*/
 			if(Timer16Stopp(TCP_CONNECT_check_timer)){
 				GSM_State = GSM_Swtch2CommandMode;
 				Transparent_Application_state = CHECK_CONNECTION_STATE;
