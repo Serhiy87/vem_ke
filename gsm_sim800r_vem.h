@@ -699,7 +699,6 @@ uint8_t ForceEndStringFromFIFO(void){
 
 // ~~~~~~~~~~~
 uint8_t GetDataFromFIFO(const uint8_t Amount){
-
 	while(GSM_RX_FIFO_Begin != GSM_RX_FIFO_End){
 		GetByteFromFIFO((uint8_t *)GSM_RxStr, (uint8_t *)&GSM_RxCharN, GSM_RXSTR_SIZE);
 		if(GSM_RxCharN >= Amount){
@@ -1053,9 +1052,6 @@ inline static void GSM_Auto(){
 		case GSM_WAIT_CCID_READ:
 			//8938001300106446004F
 			if(GetStringFromFIFO() && ((GSM_RxStr[19] == 'F')||(GSM_RxStr[19] == 'f')) ){
-
-
-
 				GSM_RxStr[18] = ' ';
 				sscanf_P(GSM_RxStr+9,PSTR("%lud"), (long unsigned int*)&ICCID2);
 				GSM_RxStr[9] = ' ';
@@ -1788,7 +1784,10 @@ inline static void GSM_Auto(){
 				Transparent = 0;
 				break;
 			}
-
+			if(Timer32Stopp(TD_GSM_Reset)){
+				GSM_State = GSM_ReStart1;
+				break;
+			}
 		/*	if(GSM_CSD == 1){	// В CSD только прозрачный режим
 				AppProtocol=0;	
 				GSM_State = GSM_DataMode;
@@ -1848,8 +1847,7 @@ inline static void GSM_Auto(){
 				StartTimer16(TD_TCP_Connect, erw(&TCP_CONNECT_timeout));	// запускаем таймер таймаута
 			}
 			if(AppProtocol != _HTTP){	// у протокола HTTP своя защита от зависания
-				if(GetStringFromFIFO()){
-								
+				if(GetStringFromFIFO()){							
 					// Анализ URC строки
 					// Отконектился клиент
 					if( (strstr_P(GSM_RxStr, URC_CLOSED+2) != NULL) ){
@@ -1878,7 +1876,6 @@ inline static void GSM_Auto(){
 				break;
 			}
 			break;
-
 		case GSM_Swtch2CommandMode:
 			StartTimer16(TD_GSM,110);	// min 1000ms before +++
 			//WebClose();
@@ -1939,7 +1936,7 @@ inline static void GSM_Auto(){
 				}
 				*qoute_clos = '\0';	//for strcmp_E
 				for(uint8_t i = 0; i<10; i++){
-					if( strcmp_E(qoute_open + 2, CSD_AllowedNumbers[i]) ) GSM_State = GSM_SEND_ATH;
+					if(strcmp_E(qoute_open + 2, CSD_AllowedNumbers[i])) GSM_State = GSM_SEND_ATH;
 					else { GSM_State = GSM_SEND_ATA; break;}
 				}
 			}
