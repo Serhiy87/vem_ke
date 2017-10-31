@@ -983,8 +983,10 @@ inline static void GSM_Auto(){
 		    Transparent_Application_state = INIT;
 			StartTimer16(TD_GSM,2000*GSM_DEBUG_DELAY);
 			StartTimer32(TD_GSM_Reset, 24UL*60UL*6000);	// ѕерезапуск модема каждые 24ч мин
+			//StartTimer32(TD_GSM_Reset, 10UL*6000);	// ѕерезапуск модема каждые 24ч мин
 			GSM_PWRCNTRL_ON();
 			InitFIFO();
+			EM_InitFIFO();
 			GSM_Modem = NOT_RECOGNIZED;
 			GSM_State = GSM_WAIT_RDY;
 			break;
@@ -1043,9 +1045,9 @@ inline static void GSM_Auto(){
 			GSM_Execute_Command(AT_CLIP,100*GSM_DEBUG_DELAY); GSM_State++;
 			break;
 		case GSM_WAIT_CLIP_OK:
-			if(GSM_Wait_Response_P(RESP_OK, GSM_ReStart1)) GSM_State++;
+			if(GSM_Wait_Response_P(RESP_OK, GSM_ReStart1)) GSM_State = GSM_SEND_CMGF;
 			break;
-		case GSM_SEND_CCID:
+	/*	case GSM_SEND_CCID:
 			GSM_RxStr[19] = 0;
 			GSM_Execute_Command(AT_CCID,300*GSM_DEBUG_DELAY); GSM_State++;
 			break;
@@ -1065,7 +1067,7 @@ inline static void GSM_Auto(){
 			break;
 		case GSM_WAIT_CCID_OK:
 			if(GSM_Wait_Response_P(RESP_OK, GSM_ReStart1)) GSM_State++;
-			break;			
+			break;	*/		
 /*		case GSM_SEND_IFC:
 			GSM_Execute_Command(AT_IFC,100*GSM_DEBUG_DELAY); GSM_State++;
 			break;
@@ -1771,7 +1773,16 @@ inline static void GSM_Auto(){
 
 		case GSM_ProtocolMode:	//анализируем первые пин€тых 4 байта
 			Transparent_Application_state = WAIT_REQUEST;
-			if(!UART_Soft){Transparent = 1;}else{Transparent = 0;}
+			if(!UART_Soft){
+				cli();
+				Transparent = 1;
+				sei();
+				}
+				else{
+				cli();
+				Transparent = 0;
+				sei();
+				}
 		/*	if(Timer16Stopp(GPRS_RECONNECT_timer)){
 				GSM_State = GSM_Swtch2CommandMode;
 				Transparent_Application_state = RECONNECT;
@@ -1781,10 +1792,15 @@ inline static void GSM_Auto(){
 			if(Timer16Stopp(TCP_CONNECT_check_timer)){
 				GSM_State = GSM_Swtch2CommandMode;
 				Transparent_Application_state = CHECK_CONNECTION_STATE;
+				cli();
 				Transparent = 0;
+				sei();
 				break;
 			}
 			if(Timer32Stopp(TD_GSM_Reset)){
+				cli();
+				Transparent = 0;
+				sei();
 				GSM_State = GSM_ReStart1;
 				break;
 			}

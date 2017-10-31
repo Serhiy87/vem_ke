@@ -27,12 +27,13 @@
 	3.06 - 01.09.2016 - ѕоддержка sim800, уровни доступа 
 	3.07 - 15.12.2016 - ƒанные раз в 30 мин, CSD 60 сек
 	4.00 - верси€ дл€ киевенерго (клиент, прозрачный режим)
+	4.01 - 23.10.2017 - исправлен баг(прозрачный режим после суточной перезагрузки )
 
 */
 #define VEGA_SN 990
 #define SW_VERSION 4
-#define SW_SUBVERSION 0
-#define SW_VERSION_Str "4.00"
+#define SW_SUBVERSION 1
+#define SW_VERSION_Str "4.01"
 
 #include <stdint.h>
 #include <stdlib.h>
